@@ -12,6 +12,14 @@ output:
 
 # Functions again
 
+
+
+```r
+plot(1:10)
+```
+
+![](Class_7_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
 We can source any file of R code with the 'source'() function.
 
 alt control i gives the insert shortcut
@@ -811,5 +819,5 @@ ggplot(mpg, aes(displ, hwy, colour = class)) +
   geom_point()
 ```
 
-![](Class_7_files/figure-html/unnamed-chunk-54-1.png)<!-- -->
+![](Class_7_files/figure-html/unnamed-chunk-55-1.png)<!-- -->
 
