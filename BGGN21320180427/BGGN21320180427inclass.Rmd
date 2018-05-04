@@ -2,7 +2,9 @@
 title: "20180427_in_class"
 author: "Andrew Valadez"
 date: "April 27, 2018"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
