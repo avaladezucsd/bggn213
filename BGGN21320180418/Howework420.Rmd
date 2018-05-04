@@ -1,0 +1,102 @@
+---
+title: "Homework420"
+author: "Andrew Valadez"
+date: "April 20, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r}
+tacotown <- 69
+if (is.character(tacotown)){
+  
+} else {
+  stop("nope")
+}
+
+50-1
+```
+
+```{r}
+stringers <- "tacostaco"
+if (nchar(stringers)==10){
+  print("I am right")
+}
+```
+
+
+```{r}
+proteinreader <- function(pdb_id_in_quotes, chain_in_quotes) {
+
+  #The purpose of this function is to plot the B-factor of a protein chain. B-factors are assigned by atom and represent the uncertainty of the atoms positions. This uncertainty has a direct relationship with flexibility. The higher the flexibility in the atom the larger the displacement and so the larger the B-factor
+  
+  #write a stop message if pdb_id_in_quotes is not in quotes essentially
+  
+  testpdbquotes <- pdb_id_in_quotes
+if (is.character(testpdbquotes)){
+  
+} else {
+  stop("Please put 4 character alphanumeric pdb id in quotes")
+}
+  
+  #check to make sure there is 4 characters only in pdb id
+  
+  stringers <- "tacostaco"
+if (nchar(testpdbquotes)==4){
+} else {
+  stop("Please put 4 character alphanumeric pdb id in quotes")
+}
+  
+  #default chain to A if not specified
+  
+  if (missing(chain_in_quotes)){
+    chain_in_quotes="A"
+  } 
+  
+  #write a stop message if chain_in_quotes is not in quotes essentially
+  
+  testchainquotes <- chain_in_quotes
+if (is.character(testchainquotes)){
+  
+} else {
+  stop("Please put chain in quotes")
+}
+  
+  #Gives access to the package
+  
+  library(bio3d)
+ 
+   # reads pdb and returns a LIST of class"pdb" with components in lists
+  
+  s1 <- read.pdb(pdb_id_in_quotes) 
+  
+  #trims the read pdb list to the specific chain of the protein and only takes the alpha carbon atoms of the specified chain (alpha carbon is the first carbon atom that attaches to a functional group)
+  
+s1.chain <- trim.pdb(s1, chain=chain_in_quotes, elety="CA")
+
+# gets the uncertainty (B-factor) of all the carbon alpha atoms
+
+s1.b <- s1.chain$atom$b
+
+#plots B-factor of each residue in the chain
+plotb3(s1.b, sse=s1.chain, typ="l", ylab="Bfactor")
+}
+
+```
+
+```{r}
+proteinreader(AKE4)
+```
+```{r}
+proteinreader("4AKE","B")
+```
+```{r}
+proteinreader("4AKE")
+```
+
