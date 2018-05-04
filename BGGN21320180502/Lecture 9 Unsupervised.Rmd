@@ -2,7 +2,9 @@
 title: 'Lecture 9: Unsupervised Learning Analysis of Cancer Cells'
 author: "Andrew Valadez"
 date: "May 2, 2018"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -75,8 +77,8 @@ dim(wisc.data)
 ```{r}
 #had to do scale = true because on the plots above the 4 and 24 posiiton needed to be scaled to the rest of them
 
-wisc.pr <- prcomp(wisc.data, scale. = TRUE)
-summary(wisc.pr)
+#wisc.pr <- prcomp(wisc.data, scale. = TRUE)
+#summary(wisc.pr)
 ```
 
 Q4. From your results, what proportion of the original variance is captured by the first principal components (PC1)?
@@ -91,7 +93,7 @@ Q6. How many principal components (PCs) are required to describe at least 90% of
 Interpreing PCA results
 
 ```{r}
-biplot(wisc.pr)
+#biplot(wisc.pr)
 ```
 
 
