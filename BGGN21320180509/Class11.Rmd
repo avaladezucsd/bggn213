@@ -183,3 +183,165 @@ pdb.ligand
 write.pdb(pdb.ligand,file="1hsvligand.pdb")
 ```
 
+
+#Section 5 working with multiple PDB files
+
+
+Download some example PDB files
+```{r}
+ids <- c("1TND_B","1AGR_A","1TAG_A","1GG2_A","1KJY_A","4G5Q_A")
+files <- get.pdb(ids, split = TRUE)
+
+```
+
+```{r}
+pdbs <- pdbaln(files, fit = TRUE)
+```
+
+Summary
+
+```{r}
+pdbs
+```
+
+Here the returned object is of class pdbs. Note that it contains a xyz numeric matrix of aligned
+C-alpha coordinates, a ali matrix of aligned residues, and a resno matrix of aligned residue
+numbers (see the list of associated attributes (+ attr)). These attirbutes can be accessed
+using the common $ syntax in R. E.g. use pdbs$ali to access the alignment. To access the
+first few rows of the alignment matrix we use standard subsetting syntax for matrices in R:
+
+access first 5 rows and 8 columns
+```{r}
+pdbs$ali[1:5, 1:8]
+```
+
+Associated residues numbers
+
+```{r}
+pdbs$resno[1:5, 1:8]
+```
+
+inspect alignment for gaps
+```{r}
+gaps <- gap.inspect(pdbs$ali)
+```
+indices of non gap columns
+```{r}
+head(gaps$f.inds)
+```
+
+access non gap columns
+```{r}
+pdbs$ali[,gaps$f.inds]
+```
+
+Having the generated pdbs object at hand facilitates a range of possibilities for protein structure
+analysis. This includes sequence identity/similarity, structural deviation, rigid core identification
+as well as principal component and normal mode analysis. Several Bio3D function are
+specifically designed to operate on the pdbs object, including functions seqidentity(),
+rmsd(), pca(), core.find(), nma() and many others.
+Below we calculate the pairwise sequence identity between the structures of the pdbs
+ensemble followed by the root mean square deviation (RMSD):
+
+
+calculate sequence identity
+```{r}
+seqidentity(pdbs)
+```
+
+calculate rmsd
+```{r}
+#rmsd(pdbs)
+```
+
+calculate rmsd
+```{r}
+#rd <- rmsd(pdbs)
+```
+
+
+
+
+
+
+
+# Section example aplication of adenylate kinase
+```{r}
+aa = get.seq("1ake_A")
+
+```
+
+blast or hmmr search
+```{r}
+b <- blast.pdb(aa)
+```
+
+plot a summary of search results
+```{r}
+hits <- plot(b)
+```
+
+using only top scoring hits
+```{r}
+head(hits$pdb.id)
+```
+
+
+fetch pdbs
+```{r}
+files5 <- get.pdb(hits$pdb.id, path="pdbs", split = TRUE, gzip = TRUE)
+```
+
+align structures
+```{r}
+pdbs5 <- pdbaln(files5)
+```
+
+vector containing pdb codes
+```{r}
+#ids5 <- basename.pdb(pdbs5$ids)
+```
+
+draw an alignmen
+
+```{r}
+plot(pdbs5, labels=ids)
+```
+sequence conservation analysis
+```{r}
+cons <- conserv(pdbs5, method = "entropy22")
+```
+
+sse annotations
+```{r}
+sse <- pdbs2sse(pdbs, ind=1, rm.gaps = FALSE)
+```
+
+plot conservaion per residue
+
+
+```{r}
+plotb3(cons, sse=sse, ylab="Sequence entropy")
+```
+
+PCA
+
+```{r}
+core <- core.find(pdbs5)
+```
+superimpose all structures to core
+
+```{r}
+pdbs5$xyz= pdbfit(pdbs5,core)
+```
+perform pca
+```{r}
+pc.xray <- pca(pdbs5)
+plot(pc.xray)
+```
+
+visualize first principal component
+```{r}
+mktrj(pc.xray,pc=1,file="pc_1.pdb")
+```
+

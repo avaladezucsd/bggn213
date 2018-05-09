@@ -308,6 +308,798 @@ pdb.ligand</code></pre>
 ##         calpha, call</code></pre>
 <pre class="r"><code>write.pdb(pdb.ligand,file=&quot;1hsvligand.pdb&quot;)</code></pre>
 </div>
+<div id="section-5-working-with-multiple-pdb-files" class="section level1">
+<h1>Section 5 working with multiple PDB files</h1>
+<p>Download some example PDB files</p>
+<pre class="r"><code>ids &lt;- c(&quot;1TND_B&quot;,&quot;1AGR_A&quot;,&quot;1TAG_A&quot;,&quot;1GG2_A&quot;,&quot;1KJY_A&quot;,&quot;4G5Q_A&quot;)
+files &lt;- get.pdb(ids, split = TRUE)</code></pre>
+<pre><code>## Warning in get.pdb(ids, split = TRUE): ./1TND.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(ids, split = TRUE): ./1AGR.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(ids, split = TRUE): ./1TAG.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(ids, split = TRUE): ./1GG2.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(ids, split = TRUE): ./1KJY.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(ids, split = TRUE): ./4G5Q.pdb exists. Skipping download</code></pre>
+<pre><code>## 
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |===========                                                      |  17%
+  |                                                                       
+  |======================                                           |  33%
+  |                                                                       
+  |================================                                 |  50%
+  |                                                                       
+  |===========================================                      |  67%
+  |                                                                       
+  |======================================================           |  83%
+  |                                                                       
+  |=================================================================| 100%</code></pre>
+<pre class="r"><code>pdbs &lt;- pdbaln(files, fit = TRUE)</code></pre>
+<pre><code>## Reading PDB files:
+## ./split_chain/1TND_B.pdb
+## ./split_chain/1AGR_A.pdb
+## ./split_chain/1TAG_A.pdb
+## ./split_chain/1GG2_A.pdb
+## ./split_chain/1KJY_A.pdb
+## ./split_chain/4G5Q_A.pdb
+## .....   PDB has ALT records, taking A only, rm.alt=TRUE
+## .
+## 
+## Extracting sequences
+## 
+## pdb/seq: 1   name: ./split_chain/1TND_B.pdb 
+## pdb/seq: 2   name: ./split_chain/1AGR_A.pdb 
+## pdb/seq: 3   name: ./split_chain/1TAG_A.pdb 
+## pdb/seq: 4   name: ./split_chain/1GG2_A.pdb 
+## pdb/seq: 5   name: ./split_chain/1KJY_A.pdb 
+## pdb/seq: 6   name: ./split_chain/4G5Q_A.pdb 
+##    PDB has ALT records, taking A only, rm.alt=TRUE</code></pre>
+<p>Summary</p>
+<pre class="r"><code>pdbs</code></pre>
+<pre><code>##                                1        .         .         .         .         50 
+## [Truncated_Name:1]1TND_B.pdb   --------------------------ARTVKLLLLGAGESGKSTIVKQMK
+## [Truncated_Name:2]1AGR_A.pdb   LSAEDKAAVERSKMIDRNLREDGEKAAREVKLLLLGAGESGKSTIVKQMK
+## [Truncated_Name:3]1TAG_A.pdb   --------------------------ARTVKLLLLGAGESGKSTIVKQMK
+## [Truncated_Name:4]1GG2_A.pdb   LSAEDKAAVERSKMIDRNLREDGEKAAREVKLLLLGAGESGKSTIVKQMK
+## [Truncated_Name:5]1KJY_A.pdb   -------------------------GAREVKLLLLGAGESGKSTIVKQMK
+## [Truncated_Name:6]4G5Q_A.pdb   --------------------------AREVKLLLLGAGESGKSTIVKQMK
+##                                                          ** ********************* 
+##                                1        .         .         .         .         50 
+## 
+##                               51        .         .         .         .         100 
+## [Truncated_Name:1]1TND_B.pdb   IIHQDGYSLEECLEFIAIIYGNTLQSILAIVRAMTTLNIQYGDSARQDDA
+## [Truncated_Name:2]1AGR_A.pdb   IIHEAGYSEEECKQYKAVVYSNTIQSIIAIIRAMGRLKIDFGDAARADDA
+## [Truncated_Name:3]1TAG_A.pdb   IIHQDGYSLEECLEFIAIIYGNTLQSILAIVRAMTTLNIQYGDSARQDDA
+## [Truncated_Name:4]1GG2_A.pdb   IIHEAGYSEEECKQYKAVVYSNTIQSIIAIIRAMGRLKIDFGDAARADDA
+## [Truncated_Name:5]1KJY_A.pdb   IIHEAGYSEEECKQYKAVVYSNTIQSIIAIIRAMGRLKIDFGDSARADDA
+## [Truncated_Name:6]4G5Q_A.pdb   IIHEAGYSEEECKQYKAVVYSNTIQSIIAIIRAMGRLKIDFGDSARADDA
+##                                ***  *** ***  ^ *^^* **^***^**^***  * * ^** ** *** 
+##                               51        .         .         .         .         100 
+## 
+##                              101        .         .         .         .         150 
+## [Truncated_Name:1]1TND_B.pdb   RKLMHMADTIEEGTMPKEMSDIIQRLWKDSGIQACFDRASEYQLNDSAGY
+## [Truncated_Name:2]1AGR_A.pdb   RQLFVLAGAAEEGFMTAELAGVIKRLWKDSGVQACFNRSREYQLNDSAAY
+## [Truncated_Name:3]1TAG_A.pdb   RKLMHMADTIEEGTMPKEMSDIIQRLWKDSGIQACFDRASEYQLNDSAGY
+## [Truncated_Name:4]1GG2_A.pdb   RQLFVLAGAAEEGFMTAELAGVIKRLWKDSGVQACFNRSREYQLNDSAAY
+## [Truncated_Name:5]1KJY_A.pdb   RQLFVLAGAAEEGFMTAELAGVIKRLWKDSGVQACFNRSREYQLNDSAAY
+## [Truncated_Name:6]4G5Q_A.pdb   RQLFVLAGAAEEGFMTAELAGVIKRLWKDSGVQACFNRSREYQLNDSAAY
+##                                * *  ^*   *** *  *^  ^* *******^**** *  ********^* 
+##                              101        .         .         .         .         150 
+## 
+##                              151        .         .         .         .         200 
+## [Truncated_Name:1]1TND_B.pdb   YLSDLERLVTPGYVPTEQDVLRSRVKTTGIIETQFSFKDLNFRMFDVGGQ
+## [Truncated_Name:2]1AGR_A.pdb   YLNDLDRIAQPNYIPTQQDVLRTRVKTTGIVETHFTFKDLHFKMFDVGGQ
+## [Truncated_Name:3]1TAG_A.pdb   YLSDLERLVTPGYVPTEQDVLRSRVKTTGIIETQFSFKDLNFRMFDVGGQ
+## [Truncated_Name:4]1GG2_A.pdb   YLNDLDRIAQPNYIPTQQDVLRTRVKTTGIVETHFTFKDLHFKMFDVGAQ
+## [Truncated_Name:5]1KJY_A.pdb   YLNDLDRIAQPNYIPTQQDVLRTRVKTTGIVETHFTFKDLHFKMFDVGGQ
+## [Truncated_Name:6]4G5Q_A.pdb   YLNDLDRIAQPNYIPTQQDVLRTRVKTTGIVETHFTFKDLHFKMFDVGGQ
+##                                ** **^*^  * *^** *****^*******^** *^**** *^*****^* 
+##                              151        .         .         .         .         200 
+## 
+##                              201        .         .         .         .         250 
+## [Truncated_Name:1]1TND_B.pdb   RSERKKWIHCFEGVTCIIFIAALSAYDMVLVEDDEVNRMHESLHLFNSIC
+## [Truncated_Name:2]1AGR_A.pdb   RSERKKWIHCFEGVTAIIFCVALSDYDLVLAEDEEMNRMHESMKLFDSIC
+## [Truncated_Name:3]1TAG_A.pdb   RSERKKWIHCFEGVTCIIFIAALSAYDMVLVEDDEVNRMHESLHLFNSIC
+## [Truncated_Name:4]1GG2_A.pdb   RSERKKWIHCFEGVTAIIFCVALSDYDLVLAEDEEMNRMHESMKLFDSIC
+## [Truncated_Name:5]1KJY_A.pdb   RSERKKWIHCFEGVTAIIFCVALSDYDLVLAEDEEMNRMHESMKLFDSIC
+## [Truncated_Name:6]4G5Q_A.pdb   RSERKKWIHCFEGVTAIIFCVALSDYDLVLAEDEEMNRMHESMKLFDSIC
+##                                *************** ***  *** **^** **^*^******^^** *** 
+##                              201        .         .         .         .         250 
+## 
+##                              251        .         .         .         .         300 
+## [Truncated_Name:1]1TND_B.pdb   NHRYFATTSIVLFLNKKDVFSEKIKKAHLSICFPDYNGPNTYEDAGNYIK
+## [Truncated_Name:2]1AGR_A.pdb   NNKWFTDTSIILFLNKKDLFEEKIKKSPLTICYPEYAGSNTYEEAAAYIQ
+## [Truncated_Name:3]1TAG_A.pdb   NHRYFATTSIVLFLNKKDVFSEKIKKAHLSICFPDYNGPNTYEDAGNYIK
+## [Truncated_Name:4]1GG2_A.pdb   NNKWFTDTSIILFLNKKDLFEEKIKKSPLTICYPEYAGSNTYEEAAAYIQ
+## [Truncated_Name:5]1KJY_A.pdb   NNKWFTDTSIILFLNKKDLFEEKIKKSPLTICYPEYAGSNTYEEAAAYIQ
+## [Truncated_Name:6]4G5Q_A.pdb   NNKWFTDTSIILFLNKKDLFEEKIKKSPLTICYPEYAGSNTYEEAAAYIQ
+##                                * ^^*  ***^*******^* *****  *^**^*^* * ****^*^ **  
+##                              251        .         .         .         .         300 
+## 
+##                              301        .         .         .         .         350 
+## [Truncated_Name:1]1TND_B.pdb   VQFLELNMRRDVKEIYSHMTCATDTQNVKFVFDAVTDIIIKE--------
+## [Truncated_Name:2]1AGR_A.pdb   CQFEDLNKRKDTKEIYTHFTCATDTKNVQFVFDAVTDVIIKNNLKDCGLF
+## [Truncated_Name:3]1TAG_A.pdb   VQFLELNMRRDVKEIYSHMTCATDTQNVKFVFDAVTDIII----------
+## [Truncated_Name:4]1GG2_A.pdb   CQFEDLNKRKDTKEIYTHFTCATDTKNVQFVFDAVTDVIIKNNL------
+## [Truncated_Name:5]1KJY_A.pdb   CQFEDLNKRKDTKEIYTHFTCATDTKNVQFVFDAVTDVIIKNNLK-----
+## [Truncated_Name:6]4G5Q_A.pdb   CQFEDLNKRKDTKEIYTHFTCATDTKNVQFVFDAVTDVIIKNNLKD----
+##                                 ** ^** *^* ****^* ****** ** ********^**           
+##                              301        .         .         .         .         350 
+## 
+## Call:
+##   pdbaln(files = files, fit = TRUE)
+## 
+## Class:
+##   pdbs, fasta
+## 
+## Alignment dimensions:
+##   6 sequence rows; 350 position columns (314 non-gap, 36 gap) 
+## 
+## + attr: xyz, resno, b, chain, id, ali, resid, sse, call</code></pre>
+<p>Here the returned object is of class pdbs. Note that it contains a xyz numeric matrix of aligned C-alpha coordinates, a ali matrix of aligned residues, and a resno matrix of aligned residue numbers (see the list of associated attributes (+ attr)). These attirbutes can be accessed using the common $ syntax in R. E.g. use pdbs$ali to access the alignment. To access the first few rows of the alignment matrix we use standard subsetting syntax for matrices in R:</p>
+<p>access first 5 rows and 8 columns</p>
+<pre class="r"><code>pdbs$ali[1:5, 1:8]</code></pre>
+<pre><code>##                          [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+## ./split_chain/1TND_B.pdb &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot; 
+## ./split_chain/1AGR_A.pdb &quot;L&quot;  &quot;S&quot;  &quot;A&quot;  &quot;E&quot;  &quot;D&quot;  &quot;K&quot;  &quot;A&quot;  &quot;A&quot; 
+## ./split_chain/1TAG_A.pdb &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot; 
+## ./split_chain/1GG2_A.pdb &quot;L&quot;  &quot;S&quot;  &quot;A&quot;  &quot;E&quot;  &quot;D&quot;  &quot;K&quot;  &quot;A&quot;  &quot;A&quot; 
+## ./split_chain/1KJY_A.pdb &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;  &quot;-&quot;</code></pre>
+<p>Associated residues numbers</p>
+<pre class="r"><code>pdbs$resno[1:5, 1:8]</code></pre>
+<pre><code>##                          [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+## ./split_chain/1TND_B.pdb   NA   NA   NA   NA   NA   NA   NA   NA
+## ./split_chain/1AGR_A.pdb    5    6    7    8    9   10   11   12
+## ./split_chain/1TAG_A.pdb   NA   NA   NA   NA   NA   NA   NA   NA
+## ./split_chain/1GG2_A.pdb    5    6    7    8    9   10   11   12
+## ./split_chain/1KJY_A.pdb   NA   NA   NA   NA   NA   NA   NA   NA</code></pre>
+<p>inspect alignment for gaps</p>
+<pre class="r"><code>gaps &lt;- gap.inspect(pdbs$ali)</code></pre>
+<p>indices of non gap columns</p>
+<pre class="r"><code>head(gaps$f.inds)</code></pre>
+<pre><code>## [1] 27 28 29 30 31 32</code></pre>
+<p>access non gap columns</p>
+<pre class="r"><code>pdbs$ali[,gaps$f.inds]</code></pre>
+<pre><code>##                          [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+## ./split_chain/1TND_B.pdb &quot;A&quot;  &quot;R&quot;  &quot;T&quot;  &quot;V&quot;  &quot;K&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot; 
+## ./split_chain/1AGR_A.pdb &quot;A&quot;  &quot;R&quot;  &quot;E&quot;  &quot;V&quot;  &quot;K&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot; 
+## ./split_chain/1TAG_A.pdb &quot;A&quot;  &quot;R&quot;  &quot;T&quot;  &quot;V&quot;  &quot;K&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot; 
+## ./split_chain/1GG2_A.pdb &quot;A&quot;  &quot;R&quot;  &quot;E&quot;  &quot;V&quot;  &quot;K&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot; 
+## ./split_chain/1KJY_A.pdb &quot;A&quot;  &quot;R&quot;  &quot;E&quot;  &quot;V&quot;  &quot;K&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot; 
+## ./split_chain/4G5Q_A.pdb &quot;A&quot;  &quot;R&quot;  &quot;E&quot;  &quot;V&quot;  &quot;K&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot;  &quot;L&quot; 
+##                          [,10] [,11] [,12] [,13] [,14] [,15] [,16] [,17]
+## ./split_chain/1TND_B.pdb &quot;G&quot;   &quot;A&quot;   &quot;G&quot;   &quot;E&quot;   &quot;S&quot;   &quot;G&quot;   &quot;K&quot;   &quot;S&quot;  
+## ./split_chain/1AGR_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;G&quot;   &quot;E&quot;   &quot;S&quot;   &quot;G&quot;   &quot;K&quot;   &quot;S&quot;  
+## ./split_chain/1TAG_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;G&quot;   &quot;E&quot;   &quot;S&quot;   &quot;G&quot;   &quot;K&quot;   &quot;S&quot;  
+## ./split_chain/1GG2_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;G&quot;   &quot;E&quot;   &quot;S&quot;   &quot;G&quot;   &quot;K&quot;   &quot;S&quot;  
+## ./split_chain/1KJY_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;G&quot;   &quot;E&quot;   &quot;S&quot;   &quot;G&quot;   &quot;K&quot;   &quot;S&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;G&quot;   &quot;E&quot;   &quot;S&quot;   &quot;G&quot;   &quot;K&quot;   &quot;S&quot;  
+##                          [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
+## ./split_chain/1TND_B.pdb &quot;T&quot;   &quot;I&quot;   &quot;V&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;M&quot;   &quot;K&quot;   &quot;I&quot;  
+## ./split_chain/1AGR_A.pdb &quot;T&quot;   &quot;I&quot;   &quot;V&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;M&quot;   &quot;K&quot;   &quot;I&quot;  
+## ./split_chain/1TAG_A.pdb &quot;T&quot;   &quot;I&quot;   &quot;V&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;M&quot;   &quot;K&quot;   &quot;I&quot;  
+## ./split_chain/1GG2_A.pdb &quot;T&quot;   &quot;I&quot;   &quot;V&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;M&quot;   &quot;K&quot;   &quot;I&quot;  
+## ./split_chain/1KJY_A.pdb &quot;T&quot;   &quot;I&quot;   &quot;V&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;M&quot;   &quot;K&quot;   &quot;I&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;T&quot;   &quot;I&quot;   &quot;V&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;M&quot;   &quot;K&quot;   &quot;I&quot;  
+##                          [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33]
+## ./split_chain/1TND_B.pdb &quot;I&quot;   &quot;H&quot;   &quot;Q&quot;   &quot;D&quot;   &quot;G&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;L&quot;  
+## ./split_chain/1AGR_A.pdb &quot;I&quot;   &quot;H&quot;   &quot;E&quot;   &quot;A&quot;   &quot;G&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;E&quot;  
+## ./split_chain/1TAG_A.pdb &quot;I&quot;   &quot;H&quot;   &quot;Q&quot;   &quot;D&quot;   &quot;G&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;L&quot;  
+## ./split_chain/1GG2_A.pdb &quot;I&quot;   &quot;H&quot;   &quot;E&quot;   &quot;A&quot;   &quot;G&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;E&quot;  
+## ./split_chain/1KJY_A.pdb &quot;I&quot;   &quot;H&quot;   &quot;E&quot;   &quot;A&quot;   &quot;G&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;E&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;I&quot;   &quot;H&quot;   &quot;E&quot;   &quot;A&quot;   &quot;G&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;E&quot;  
+##                          [,34] [,35] [,36] [,37] [,38] [,39] [,40] [,41]
+## ./split_chain/1TND_B.pdb &quot;E&quot;   &quot;E&quot;   &quot;C&quot;   &quot;L&quot;   &quot;E&quot;   &quot;F&quot;   &quot;I&quot;   &quot;A&quot;  
+## ./split_chain/1AGR_A.pdb &quot;E&quot;   &quot;E&quot;   &quot;C&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;Y&quot;   &quot;K&quot;   &quot;A&quot;  
+## ./split_chain/1TAG_A.pdb &quot;E&quot;   &quot;E&quot;   &quot;C&quot;   &quot;L&quot;   &quot;E&quot;   &quot;F&quot;   &quot;I&quot;   &quot;A&quot;  
+## ./split_chain/1GG2_A.pdb &quot;E&quot;   &quot;E&quot;   &quot;C&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;Y&quot;   &quot;K&quot;   &quot;A&quot;  
+## ./split_chain/1KJY_A.pdb &quot;E&quot;   &quot;E&quot;   &quot;C&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;Y&quot;   &quot;K&quot;   &quot;A&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;E&quot;   &quot;E&quot;   &quot;C&quot;   &quot;K&quot;   &quot;Q&quot;   &quot;Y&quot;   &quot;K&quot;   &quot;A&quot;  
+##                          [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]
+## ./split_chain/1TND_B.pdb &quot;I&quot;   &quot;I&quot;   &quot;Y&quot;   &quot;G&quot;   &quot;N&quot;   &quot;T&quot;   &quot;L&quot;   &quot;Q&quot;  
+## ./split_chain/1AGR_A.pdb &quot;V&quot;   &quot;V&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;N&quot;   &quot;T&quot;   &quot;I&quot;   &quot;Q&quot;  
+## ./split_chain/1TAG_A.pdb &quot;I&quot;   &quot;I&quot;   &quot;Y&quot;   &quot;G&quot;   &quot;N&quot;   &quot;T&quot;   &quot;L&quot;   &quot;Q&quot;  
+## ./split_chain/1GG2_A.pdb &quot;V&quot;   &quot;V&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;N&quot;   &quot;T&quot;   &quot;I&quot;   &quot;Q&quot;  
+## ./split_chain/1KJY_A.pdb &quot;V&quot;   &quot;V&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;N&quot;   &quot;T&quot;   &quot;I&quot;   &quot;Q&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;V&quot;   &quot;V&quot;   &quot;Y&quot;   &quot;S&quot;   &quot;N&quot;   &quot;T&quot;   &quot;I&quot;   &quot;Q&quot;  
+##                          [,50] [,51] [,52] [,53] [,54] [,55] [,56] [,57]
+## ./split_chain/1TND_B.pdb &quot;S&quot;   &quot;I&quot;   &quot;L&quot;   &quot;A&quot;   &quot;I&quot;   &quot;V&quot;   &quot;R&quot;   &quot;A&quot;  
+## ./split_chain/1AGR_A.pdb &quot;S&quot;   &quot;I&quot;   &quot;I&quot;   &quot;A&quot;   &quot;I&quot;   &quot;I&quot;   &quot;R&quot;   &quot;A&quot;  
+## ./split_chain/1TAG_A.pdb &quot;S&quot;   &quot;I&quot;   &quot;L&quot;   &quot;A&quot;   &quot;I&quot;   &quot;V&quot;   &quot;R&quot;   &quot;A&quot;  
+## ./split_chain/1GG2_A.pdb &quot;S&quot;   &quot;I&quot;   &quot;I&quot;   &quot;A&quot;   &quot;I&quot;   &quot;I&quot;   &quot;R&quot;   &quot;A&quot;  
+## ./split_chain/1KJY_A.pdb &quot;S&quot;   &quot;I&quot;   &quot;I&quot;   &quot;A&quot;   &quot;I&quot;   &quot;I&quot;   &quot;R&quot;   &quot;A&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;S&quot;   &quot;I&quot;   &quot;I&quot;   &quot;A&quot;   &quot;I&quot;   &quot;I&quot;   &quot;R&quot;   &quot;A&quot;  
+##                          [,58] [,59] [,60] [,61] [,62] [,63] [,64] [,65]
+## ./split_chain/1TND_B.pdb &quot;M&quot;   &quot;T&quot;   &quot;T&quot;   &quot;L&quot;   &quot;N&quot;   &quot;I&quot;   &quot;Q&quot;   &quot;Y&quot;  
+## ./split_chain/1AGR_A.pdb &quot;M&quot;   &quot;G&quot;   &quot;R&quot;   &quot;L&quot;   &quot;K&quot;   &quot;I&quot;   &quot;D&quot;   &quot;F&quot;  
+## ./split_chain/1TAG_A.pdb &quot;M&quot;   &quot;T&quot;   &quot;T&quot;   &quot;L&quot;   &quot;N&quot;   &quot;I&quot;   &quot;Q&quot;   &quot;Y&quot;  
+## ./split_chain/1GG2_A.pdb &quot;M&quot;   &quot;G&quot;   &quot;R&quot;   &quot;L&quot;   &quot;K&quot;   &quot;I&quot;   &quot;D&quot;   &quot;F&quot;  
+## ./split_chain/1KJY_A.pdb &quot;M&quot;   &quot;G&quot;   &quot;R&quot;   &quot;L&quot;   &quot;K&quot;   &quot;I&quot;   &quot;D&quot;   &quot;F&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;M&quot;   &quot;G&quot;   &quot;R&quot;   &quot;L&quot;   &quot;K&quot;   &quot;I&quot;   &quot;D&quot;   &quot;F&quot;  
+##                          [,66] [,67] [,68] [,69] [,70] [,71] [,72] [,73]
+## ./split_chain/1TND_B.pdb &quot;G&quot;   &quot;D&quot;   &quot;S&quot;   &quot;A&quot;   &quot;R&quot;   &quot;Q&quot;   &quot;D&quot;   &quot;D&quot;  
+## ./split_chain/1AGR_A.pdb &quot;G&quot;   &quot;D&quot;   &quot;A&quot;   &quot;A&quot;   &quot;R&quot;   &quot;A&quot;   &quot;D&quot;   &quot;D&quot;  
+## ./split_chain/1TAG_A.pdb &quot;G&quot;   &quot;D&quot;   &quot;S&quot;   &quot;A&quot;   &quot;R&quot;   &quot;Q&quot;   &quot;D&quot;   &quot;D&quot;  
+## ./split_chain/1GG2_A.pdb &quot;G&quot;   &quot;D&quot;   &quot;A&quot;   &quot;A&quot;   &quot;R&quot;   &quot;A&quot;   &quot;D&quot;   &quot;D&quot;  
+## ./split_chain/1KJY_A.pdb &quot;G&quot;   &quot;D&quot;   &quot;S&quot;   &quot;A&quot;   &quot;R&quot;   &quot;A&quot;   &quot;D&quot;   &quot;D&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;G&quot;   &quot;D&quot;   &quot;S&quot;   &quot;A&quot;   &quot;R&quot;   &quot;A&quot;   &quot;D&quot;   &quot;D&quot;  
+##                          [,74] [,75] [,76] [,77] [,78] [,79] [,80] [,81]
+## ./split_chain/1TND_B.pdb &quot;A&quot;   &quot;R&quot;   &quot;K&quot;   &quot;L&quot;   &quot;M&quot;   &quot;H&quot;   &quot;M&quot;   &quot;A&quot;  
+## ./split_chain/1AGR_A.pdb &quot;A&quot;   &quot;R&quot;   &quot;Q&quot;   &quot;L&quot;   &quot;F&quot;   &quot;V&quot;   &quot;L&quot;   &quot;A&quot;  
+## ./split_chain/1TAG_A.pdb &quot;A&quot;   &quot;R&quot;   &quot;K&quot;   &quot;L&quot;   &quot;M&quot;   &quot;H&quot;   &quot;M&quot;   &quot;A&quot;  
+## ./split_chain/1GG2_A.pdb &quot;A&quot;   &quot;R&quot;   &quot;Q&quot;   &quot;L&quot;   &quot;F&quot;   &quot;V&quot;   &quot;L&quot;   &quot;A&quot;  
+## ./split_chain/1KJY_A.pdb &quot;A&quot;   &quot;R&quot;   &quot;Q&quot;   &quot;L&quot;   &quot;F&quot;   &quot;V&quot;   &quot;L&quot;   &quot;A&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;A&quot;   &quot;R&quot;   &quot;Q&quot;   &quot;L&quot;   &quot;F&quot;   &quot;V&quot;   &quot;L&quot;   &quot;A&quot;  
+##                          [,82] [,83] [,84] [,85] [,86] [,87] [,88] [,89]
+## ./split_chain/1TND_B.pdb &quot;D&quot;   &quot;T&quot;   &quot;I&quot;   &quot;E&quot;   &quot;E&quot;   &quot;G&quot;   &quot;T&quot;   &quot;M&quot;  
+## ./split_chain/1AGR_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;A&quot;   &quot;E&quot;   &quot;E&quot;   &quot;G&quot;   &quot;F&quot;   &quot;M&quot;  
+## ./split_chain/1TAG_A.pdb &quot;D&quot;   &quot;T&quot;   &quot;I&quot;   &quot;E&quot;   &quot;E&quot;   &quot;G&quot;   &quot;T&quot;   &quot;M&quot;  
+## ./split_chain/1GG2_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;A&quot;   &quot;E&quot;   &quot;E&quot;   &quot;G&quot;   &quot;F&quot;   &quot;M&quot;  
+## ./split_chain/1KJY_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;A&quot;   &quot;E&quot;   &quot;E&quot;   &quot;G&quot;   &quot;F&quot;   &quot;M&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;G&quot;   &quot;A&quot;   &quot;A&quot;   &quot;E&quot;   &quot;E&quot;   &quot;G&quot;   &quot;F&quot;   &quot;M&quot;  
+##                          [,90] [,91] [,92] [,93] [,94] [,95] [,96] [,97]
+## ./split_chain/1TND_B.pdb &quot;P&quot;   &quot;K&quot;   &quot;E&quot;   &quot;M&quot;   &quot;S&quot;   &quot;D&quot;   &quot;I&quot;   &quot;I&quot;  
+## ./split_chain/1AGR_A.pdb &quot;T&quot;   &quot;A&quot;   &quot;E&quot;   &quot;L&quot;   &quot;A&quot;   &quot;G&quot;   &quot;V&quot;   &quot;I&quot;  
+## ./split_chain/1TAG_A.pdb &quot;P&quot;   &quot;K&quot;   &quot;E&quot;   &quot;M&quot;   &quot;S&quot;   &quot;D&quot;   &quot;I&quot;   &quot;I&quot;  
+## ./split_chain/1GG2_A.pdb &quot;T&quot;   &quot;A&quot;   &quot;E&quot;   &quot;L&quot;   &quot;A&quot;   &quot;G&quot;   &quot;V&quot;   &quot;I&quot;  
+## ./split_chain/1KJY_A.pdb &quot;T&quot;   &quot;A&quot;   &quot;E&quot;   &quot;L&quot;   &quot;A&quot;   &quot;G&quot;   &quot;V&quot;   &quot;I&quot;  
+## ./split_chain/4G5Q_A.pdb &quot;T&quot;   &quot;A&quot;   &quot;E&quot;   &quot;L&quot;   &quot;A&quot;   &quot;G&quot;   &quot;V&quot;   &quot;I&quot;  
+##                          [,98] [,99] [,100] [,101] [,102] [,103] [,104]
+## ./split_chain/1TND_B.pdb &quot;Q&quot;   &quot;R&quot;   &quot;L&quot;    &quot;W&quot;    &quot;K&quot;    &quot;D&quot;    &quot;S&quot;   
+## ./split_chain/1AGR_A.pdb &quot;K&quot;   &quot;R&quot;   &quot;L&quot;    &quot;W&quot;    &quot;K&quot;    &quot;D&quot;    &quot;S&quot;   
+## ./split_chain/1TAG_A.pdb &quot;Q&quot;   &quot;R&quot;   &quot;L&quot;    &quot;W&quot;    &quot;K&quot;    &quot;D&quot;    &quot;S&quot;   
+## ./split_chain/1GG2_A.pdb &quot;K&quot;   &quot;R&quot;   &quot;L&quot;    &quot;W&quot;    &quot;K&quot;    &quot;D&quot;    &quot;S&quot;   
+## ./split_chain/1KJY_A.pdb &quot;K&quot;   &quot;R&quot;   &quot;L&quot;    &quot;W&quot;    &quot;K&quot;    &quot;D&quot;    &quot;S&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;K&quot;   &quot;R&quot;   &quot;L&quot;    &quot;W&quot;    &quot;K&quot;    &quot;D&quot;    &quot;S&quot;   
+##                          [,105] [,106] [,107] [,108] [,109] [,110] [,111]
+## ./split_chain/1TND_B.pdb &quot;G&quot;    &quot;I&quot;    &quot;Q&quot;    &quot;A&quot;    &quot;C&quot;    &quot;F&quot;    &quot;D&quot;   
+## ./split_chain/1AGR_A.pdb &quot;G&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;A&quot;    &quot;C&quot;    &quot;F&quot;    &quot;N&quot;   
+## ./split_chain/1TAG_A.pdb &quot;G&quot;    &quot;I&quot;    &quot;Q&quot;    &quot;A&quot;    &quot;C&quot;    &quot;F&quot;    &quot;D&quot;   
+## ./split_chain/1GG2_A.pdb &quot;G&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;A&quot;    &quot;C&quot;    &quot;F&quot;    &quot;N&quot;   
+## ./split_chain/1KJY_A.pdb &quot;G&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;A&quot;    &quot;C&quot;    &quot;F&quot;    &quot;N&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;G&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;A&quot;    &quot;C&quot;    &quot;F&quot;    &quot;N&quot;   
+##                          [,112] [,113] [,114] [,115] [,116] [,117] [,118]
+## ./split_chain/1TND_B.pdb &quot;R&quot;    &quot;A&quot;    &quot;S&quot;    &quot;E&quot;    &quot;Y&quot;    &quot;Q&quot;    &quot;L&quot;   
+## ./split_chain/1AGR_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;R&quot;    &quot;E&quot;    &quot;Y&quot;    &quot;Q&quot;    &quot;L&quot;   
+## ./split_chain/1TAG_A.pdb &quot;R&quot;    &quot;A&quot;    &quot;S&quot;    &quot;E&quot;    &quot;Y&quot;    &quot;Q&quot;    &quot;L&quot;   
+## ./split_chain/1GG2_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;R&quot;    &quot;E&quot;    &quot;Y&quot;    &quot;Q&quot;    &quot;L&quot;   
+## ./split_chain/1KJY_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;R&quot;    &quot;E&quot;    &quot;Y&quot;    &quot;Q&quot;    &quot;L&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;R&quot;    &quot;E&quot;    &quot;Y&quot;    &quot;Q&quot;    &quot;L&quot;   
+##                          [,119] [,120] [,121] [,122] [,123] [,124] [,125]
+## ./split_chain/1TND_B.pdb &quot;N&quot;    &quot;D&quot;    &quot;S&quot;    &quot;A&quot;    &quot;G&quot;    &quot;Y&quot;    &quot;Y&quot;   
+## ./split_chain/1AGR_A.pdb &quot;N&quot;    &quot;D&quot;    &quot;S&quot;    &quot;A&quot;    &quot;A&quot;    &quot;Y&quot;    &quot;Y&quot;   
+## ./split_chain/1TAG_A.pdb &quot;N&quot;    &quot;D&quot;    &quot;S&quot;    &quot;A&quot;    &quot;G&quot;    &quot;Y&quot;    &quot;Y&quot;   
+## ./split_chain/1GG2_A.pdb &quot;N&quot;    &quot;D&quot;    &quot;S&quot;    &quot;A&quot;    &quot;A&quot;    &quot;Y&quot;    &quot;Y&quot;   
+## ./split_chain/1KJY_A.pdb &quot;N&quot;    &quot;D&quot;    &quot;S&quot;    &quot;A&quot;    &quot;A&quot;    &quot;Y&quot;    &quot;Y&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;N&quot;    &quot;D&quot;    &quot;S&quot;    &quot;A&quot;    &quot;A&quot;    &quot;Y&quot;    &quot;Y&quot;   
+##                          [,126] [,127] [,128] [,129] [,130] [,131] [,132]
+## ./split_chain/1TND_B.pdb &quot;L&quot;    &quot;S&quot;    &quot;D&quot;    &quot;L&quot;    &quot;E&quot;    &quot;R&quot;    &quot;L&quot;   
+## ./split_chain/1AGR_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;D&quot;    &quot;L&quot;    &quot;D&quot;    &quot;R&quot;    &quot;I&quot;   
+## ./split_chain/1TAG_A.pdb &quot;L&quot;    &quot;S&quot;    &quot;D&quot;    &quot;L&quot;    &quot;E&quot;    &quot;R&quot;    &quot;L&quot;   
+## ./split_chain/1GG2_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;D&quot;    &quot;L&quot;    &quot;D&quot;    &quot;R&quot;    &quot;I&quot;   
+## ./split_chain/1KJY_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;D&quot;    &quot;L&quot;    &quot;D&quot;    &quot;R&quot;    &quot;I&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;D&quot;    &quot;L&quot;    &quot;D&quot;    &quot;R&quot;    &quot;I&quot;   
+##                          [,133] [,134] [,135] [,136] [,137] [,138] [,139]
+## ./split_chain/1TND_B.pdb &quot;V&quot;    &quot;T&quot;    &quot;P&quot;    &quot;G&quot;    &quot;Y&quot;    &quot;V&quot;    &quot;P&quot;   
+## ./split_chain/1AGR_A.pdb &quot;A&quot;    &quot;Q&quot;    &quot;P&quot;    &quot;N&quot;    &quot;Y&quot;    &quot;I&quot;    &quot;P&quot;   
+## ./split_chain/1TAG_A.pdb &quot;V&quot;    &quot;T&quot;    &quot;P&quot;    &quot;G&quot;    &quot;Y&quot;    &quot;V&quot;    &quot;P&quot;   
+## ./split_chain/1GG2_A.pdb &quot;A&quot;    &quot;Q&quot;    &quot;P&quot;    &quot;N&quot;    &quot;Y&quot;    &quot;I&quot;    &quot;P&quot;   
+## ./split_chain/1KJY_A.pdb &quot;A&quot;    &quot;Q&quot;    &quot;P&quot;    &quot;N&quot;    &quot;Y&quot;    &quot;I&quot;    &quot;P&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;A&quot;    &quot;Q&quot;    &quot;P&quot;    &quot;N&quot;    &quot;Y&quot;    &quot;I&quot;    &quot;P&quot;   
+##                          [,140] [,141] [,142] [,143] [,144] [,145] [,146]
+## ./split_chain/1TND_B.pdb &quot;T&quot;    &quot;E&quot;    &quot;Q&quot;    &quot;D&quot;    &quot;V&quot;    &quot;L&quot;    &quot;R&quot;   
+## ./split_chain/1AGR_A.pdb &quot;T&quot;    &quot;Q&quot;    &quot;Q&quot;    &quot;D&quot;    &quot;V&quot;    &quot;L&quot;    &quot;R&quot;   
+## ./split_chain/1TAG_A.pdb &quot;T&quot;    &quot;E&quot;    &quot;Q&quot;    &quot;D&quot;    &quot;V&quot;    &quot;L&quot;    &quot;R&quot;   
+## ./split_chain/1GG2_A.pdb &quot;T&quot;    &quot;Q&quot;    &quot;Q&quot;    &quot;D&quot;    &quot;V&quot;    &quot;L&quot;    &quot;R&quot;   
+## ./split_chain/1KJY_A.pdb &quot;T&quot;    &quot;Q&quot;    &quot;Q&quot;    &quot;D&quot;    &quot;V&quot;    &quot;L&quot;    &quot;R&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;T&quot;    &quot;Q&quot;    &quot;Q&quot;    &quot;D&quot;    &quot;V&quot;    &quot;L&quot;    &quot;R&quot;   
+##                          [,147] [,148] [,149] [,150] [,151] [,152] [,153]
+## ./split_chain/1TND_B.pdb &quot;S&quot;    &quot;R&quot;    &quot;V&quot;    &quot;K&quot;    &quot;T&quot;    &quot;T&quot;    &quot;G&quot;   
+## ./split_chain/1AGR_A.pdb &quot;T&quot;    &quot;R&quot;    &quot;V&quot;    &quot;K&quot;    &quot;T&quot;    &quot;T&quot;    &quot;G&quot;   
+## ./split_chain/1TAG_A.pdb &quot;S&quot;    &quot;R&quot;    &quot;V&quot;    &quot;K&quot;    &quot;T&quot;    &quot;T&quot;    &quot;G&quot;   
+## ./split_chain/1GG2_A.pdb &quot;T&quot;    &quot;R&quot;    &quot;V&quot;    &quot;K&quot;    &quot;T&quot;    &quot;T&quot;    &quot;G&quot;   
+## ./split_chain/1KJY_A.pdb &quot;T&quot;    &quot;R&quot;    &quot;V&quot;    &quot;K&quot;    &quot;T&quot;    &quot;T&quot;    &quot;G&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;T&quot;    &quot;R&quot;    &quot;V&quot;    &quot;K&quot;    &quot;T&quot;    &quot;T&quot;    &quot;G&quot;   
+##                          [,154] [,155] [,156] [,157] [,158] [,159] [,160]
+## ./split_chain/1TND_B.pdb &quot;I&quot;    &quot;I&quot;    &quot;E&quot;    &quot;T&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;S&quot;   
+## ./split_chain/1AGR_A.pdb &quot;I&quot;    &quot;V&quot;    &quot;E&quot;    &quot;T&quot;    &quot;H&quot;    &quot;F&quot;    &quot;T&quot;   
+## ./split_chain/1TAG_A.pdb &quot;I&quot;    &quot;I&quot;    &quot;E&quot;    &quot;T&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;S&quot;   
+## ./split_chain/1GG2_A.pdb &quot;I&quot;    &quot;V&quot;    &quot;E&quot;    &quot;T&quot;    &quot;H&quot;    &quot;F&quot;    &quot;T&quot;   
+## ./split_chain/1KJY_A.pdb &quot;I&quot;    &quot;V&quot;    &quot;E&quot;    &quot;T&quot;    &quot;H&quot;    &quot;F&quot;    &quot;T&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;I&quot;    &quot;V&quot;    &quot;E&quot;    &quot;T&quot;    &quot;H&quot;    &quot;F&quot;    &quot;T&quot;   
+##                          [,161] [,162] [,163] [,164] [,165] [,166] [,167]
+## ./split_chain/1TND_B.pdb &quot;F&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;N&quot;    &quot;F&quot;    &quot;R&quot;   
+## ./split_chain/1AGR_A.pdb &quot;F&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;H&quot;    &quot;F&quot;    &quot;K&quot;   
+## ./split_chain/1TAG_A.pdb &quot;F&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;N&quot;    &quot;F&quot;    &quot;R&quot;   
+## ./split_chain/1GG2_A.pdb &quot;F&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;H&quot;    &quot;F&quot;    &quot;K&quot;   
+## ./split_chain/1KJY_A.pdb &quot;F&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;H&quot;    &quot;F&quot;    &quot;K&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;F&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;H&quot;    &quot;F&quot;    &quot;K&quot;   
+##                          [,168] [,169] [,170] [,171] [,172] [,173] [,174]
+## ./split_chain/1TND_B.pdb &quot;M&quot;    &quot;F&quot;    &quot;D&quot;    &quot;V&quot;    &quot;G&quot;    &quot;G&quot;    &quot;Q&quot;   
+## ./split_chain/1AGR_A.pdb &quot;M&quot;    &quot;F&quot;    &quot;D&quot;    &quot;V&quot;    &quot;G&quot;    &quot;G&quot;    &quot;Q&quot;   
+## ./split_chain/1TAG_A.pdb &quot;M&quot;    &quot;F&quot;    &quot;D&quot;    &quot;V&quot;    &quot;G&quot;    &quot;G&quot;    &quot;Q&quot;   
+## ./split_chain/1GG2_A.pdb &quot;M&quot;    &quot;F&quot;    &quot;D&quot;    &quot;V&quot;    &quot;G&quot;    &quot;A&quot;    &quot;Q&quot;   
+## ./split_chain/1KJY_A.pdb &quot;M&quot;    &quot;F&quot;    &quot;D&quot;    &quot;V&quot;    &quot;G&quot;    &quot;G&quot;    &quot;Q&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;M&quot;    &quot;F&quot;    &quot;D&quot;    &quot;V&quot;    &quot;G&quot;    &quot;G&quot;    &quot;Q&quot;   
+##                          [,175] [,176] [,177] [,178] [,179] [,180] [,181]
+## ./split_chain/1TND_B.pdb &quot;R&quot;    &quot;S&quot;    &quot;E&quot;    &quot;R&quot;    &quot;K&quot;    &quot;K&quot;    &quot;W&quot;   
+## ./split_chain/1AGR_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;E&quot;    &quot;R&quot;    &quot;K&quot;    &quot;K&quot;    &quot;W&quot;   
+## ./split_chain/1TAG_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;E&quot;    &quot;R&quot;    &quot;K&quot;    &quot;K&quot;    &quot;W&quot;   
+## ./split_chain/1GG2_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;E&quot;    &quot;R&quot;    &quot;K&quot;    &quot;K&quot;    &quot;W&quot;   
+## ./split_chain/1KJY_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;E&quot;    &quot;R&quot;    &quot;K&quot;    &quot;K&quot;    &quot;W&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;R&quot;    &quot;S&quot;    &quot;E&quot;    &quot;R&quot;    &quot;K&quot;    &quot;K&quot;    &quot;W&quot;   
+##                          [,182] [,183] [,184] [,185] [,186] [,187] [,188]
+## ./split_chain/1TND_B.pdb &quot;I&quot;    &quot;H&quot;    &quot;C&quot;    &quot;F&quot;    &quot;E&quot;    &quot;G&quot;    &quot;V&quot;   
+## ./split_chain/1AGR_A.pdb &quot;I&quot;    &quot;H&quot;    &quot;C&quot;    &quot;F&quot;    &quot;E&quot;    &quot;G&quot;    &quot;V&quot;   
+## ./split_chain/1TAG_A.pdb &quot;I&quot;    &quot;H&quot;    &quot;C&quot;    &quot;F&quot;    &quot;E&quot;    &quot;G&quot;    &quot;V&quot;   
+## ./split_chain/1GG2_A.pdb &quot;I&quot;    &quot;H&quot;    &quot;C&quot;    &quot;F&quot;    &quot;E&quot;    &quot;G&quot;    &quot;V&quot;   
+## ./split_chain/1KJY_A.pdb &quot;I&quot;    &quot;H&quot;    &quot;C&quot;    &quot;F&quot;    &quot;E&quot;    &quot;G&quot;    &quot;V&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;I&quot;    &quot;H&quot;    &quot;C&quot;    &quot;F&quot;    &quot;E&quot;    &quot;G&quot;    &quot;V&quot;   
+##                          [,189] [,190] [,191] [,192] [,193] [,194] [,195]
+## ./split_chain/1TND_B.pdb &quot;T&quot;    &quot;C&quot;    &quot;I&quot;    &quot;I&quot;    &quot;F&quot;    &quot;I&quot;    &quot;A&quot;   
+## ./split_chain/1AGR_A.pdb &quot;T&quot;    &quot;A&quot;    &quot;I&quot;    &quot;I&quot;    &quot;F&quot;    &quot;C&quot;    &quot;V&quot;   
+## ./split_chain/1TAG_A.pdb &quot;T&quot;    &quot;C&quot;    &quot;I&quot;    &quot;I&quot;    &quot;F&quot;    &quot;I&quot;    &quot;A&quot;   
+## ./split_chain/1GG2_A.pdb &quot;T&quot;    &quot;A&quot;    &quot;I&quot;    &quot;I&quot;    &quot;F&quot;    &quot;C&quot;    &quot;V&quot;   
+## ./split_chain/1KJY_A.pdb &quot;T&quot;    &quot;A&quot;    &quot;I&quot;    &quot;I&quot;    &quot;F&quot;    &quot;C&quot;    &quot;V&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;T&quot;    &quot;A&quot;    &quot;I&quot;    &quot;I&quot;    &quot;F&quot;    &quot;C&quot;    &quot;V&quot;   
+##                          [,196] [,197] [,198] [,199] [,200] [,201] [,202]
+## ./split_chain/1TND_B.pdb &quot;A&quot;    &quot;L&quot;    &quot;S&quot;    &quot;A&quot;    &quot;Y&quot;    &quot;D&quot;    &quot;M&quot;   
+## ./split_chain/1AGR_A.pdb &quot;A&quot;    &quot;L&quot;    &quot;S&quot;    &quot;D&quot;    &quot;Y&quot;    &quot;D&quot;    &quot;L&quot;   
+## ./split_chain/1TAG_A.pdb &quot;A&quot;    &quot;L&quot;    &quot;S&quot;    &quot;A&quot;    &quot;Y&quot;    &quot;D&quot;    &quot;M&quot;   
+## ./split_chain/1GG2_A.pdb &quot;A&quot;    &quot;L&quot;    &quot;S&quot;    &quot;D&quot;    &quot;Y&quot;    &quot;D&quot;    &quot;L&quot;   
+## ./split_chain/1KJY_A.pdb &quot;A&quot;    &quot;L&quot;    &quot;S&quot;    &quot;D&quot;    &quot;Y&quot;    &quot;D&quot;    &quot;L&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;A&quot;    &quot;L&quot;    &quot;S&quot;    &quot;D&quot;    &quot;Y&quot;    &quot;D&quot;    &quot;L&quot;   
+##                          [,203] [,204] [,205] [,206] [,207] [,208] [,209]
+## ./split_chain/1TND_B.pdb &quot;V&quot;    &quot;L&quot;    &quot;V&quot;    &quot;E&quot;    &quot;D&quot;    &quot;D&quot;    &quot;E&quot;   
+## ./split_chain/1AGR_A.pdb &quot;V&quot;    &quot;L&quot;    &quot;A&quot;    &quot;E&quot;    &quot;D&quot;    &quot;E&quot;    &quot;E&quot;   
+## ./split_chain/1TAG_A.pdb &quot;V&quot;    &quot;L&quot;    &quot;V&quot;    &quot;E&quot;    &quot;D&quot;    &quot;D&quot;    &quot;E&quot;   
+## ./split_chain/1GG2_A.pdb &quot;V&quot;    &quot;L&quot;    &quot;A&quot;    &quot;E&quot;    &quot;D&quot;    &quot;E&quot;    &quot;E&quot;   
+## ./split_chain/1KJY_A.pdb &quot;V&quot;    &quot;L&quot;    &quot;A&quot;    &quot;E&quot;    &quot;D&quot;    &quot;E&quot;    &quot;E&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;V&quot;    &quot;L&quot;    &quot;A&quot;    &quot;E&quot;    &quot;D&quot;    &quot;E&quot;    &quot;E&quot;   
+##                          [,210] [,211] [,212] [,213] [,214] [,215] [,216]
+## ./split_chain/1TND_B.pdb &quot;V&quot;    &quot;N&quot;    &quot;R&quot;    &quot;M&quot;    &quot;H&quot;    &quot;E&quot;    &quot;S&quot;   
+## ./split_chain/1AGR_A.pdb &quot;M&quot;    &quot;N&quot;    &quot;R&quot;    &quot;M&quot;    &quot;H&quot;    &quot;E&quot;    &quot;S&quot;   
+## ./split_chain/1TAG_A.pdb &quot;V&quot;    &quot;N&quot;    &quot;R&quot;    &quot;M&quot;    &quot;H&quot;    &quot;E&quot;    &quot;S&quot;   
+## ./split_chain/1GG2_A.pdb &quot;M&quot;    &quot;N&quot;    &quot;R&quot;    &quot;M&quot;    &quot;H&quot;    &quot;E&quot;    &quot;S&quot;   
+## ./split_chain/1KJY_A.pdb &quot;M&quot;    &quot;N&quot;    &quot;R&quot;    &quot;M&quot;    &quot;H&quot;    &quot;E&quot;    &quot;S&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;M&quot;    &quot;N&quot;    &quot;R&quot;    &quot;M&quot;    &quot;H&quot;    &quot;E&quot;    &quot;S&quot;   
+##                          [,217] [,218] [,219] [,220] [,221] [,222] [,223]
+## ./split_chain/1TND_B.pdb &quot;L&quot;    &quot;H&quot;    &quot;L&quot;    &quot;F&quot;    &quot;N&quot;    &quot;S&quot;    &quot;I&quot;   
+## ./split_chain/1AGR_A.pdb &quot;M&quot;    &quot;K&quot;    &quot;L&quot;    &quot;F&quot;    &quot;D&quot;    &quot;S&quot;    &quot;I&quot;   
+## ./split_chain/1TAG_A.pdb &quot;L&quot;    &quot;H&quot;    &quot;L&quot;    &quot;F&quot;    &quot;N&quot;    &quot;S&quot;    &quot;I&quot;   
+## ./split_chain/1GG2_A.pdb &quot;M&quot;    &quot;K&quot;    &quot;L&quot;    &quot;F&quot;    &quot;D&quot;    &quot;S&quot;    &quot;I&quot;   
+## ./split_chain/1KJY_A.pdb &quot;M&quot;    &quot;K&quot;    &quot;L&quot;    &quot;F&quot;    &quot;D&quot;    &quot;S&quot;    &quot;I&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;M&quot;    &quot;K&quot;    &quot;L&quot;    &quot;F&quot;    &quot;D&quot;    &quot;S&quot;    &quot;I&quot;   
+##                          [,224] [,225] [,226] [,227] [,228] [,229] [,230]
+## ./split_chain/1TND_B.pdb &quot;C&quot;    &quot;N&quot;    &quot;H&quot;    &quot;R&quot;    &quot;Y&quot;    &quot;F&quot;    &quot;A&quot;   
+## ./split_chain/1AGR_A.pdb &quot;C&quot;    &quot;N&quot;    &quot;N&quot;    &quot;K&quot;    &quot;W&quot;    &quot;F&quot;    &quot;T&quot;   
+## ./split_chain/1TAG_A.pdb &quot;C&quot;    &quot;N&quot;    &quot;H&quot;    &quot;R&quot;    &quot;Y&quot;    &quot;F&quot;    &quot;A&quot;   
+## ./split_chain/1GG2_A.pdb &quot;C&quot;    &quot;N&quot;    &quot;N&quot;    &quot;K&quot;    &quot;W&quot;    &quot;F&quot;    &quot;T&quot;   
+## ./split_chain/1KJY_A.pdb &quot;C&quot;    &quot;N&quot;    &quot;N&quot;    &quot;K&quot;    &quot;W&quot;    &quot;F&quot;    &quot;T&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;C&quot;    &quot;N&quot;    &quot;N&quot;    &quot;K&quot;    &quot;W&quot;    &quot;F&quot;    &quot;T&quot;   
+##                          [,231] [,232] [,233] [,234] [,235] [,236] [,237]
+## ./split_chain/1TND_B.pdb &quot;T&quot;    &quot;T&quot;    &quot;S&quot;    &quot;I&quot;    &quot;V&quot;    &quot;L&quot;    &quot;F&quot;   
+## ./split_chain/1AGR_A.pdb &quot;D&quot;    &quot;T&quot;    &quot;S&quot;    &quot;I&quot;    &quot;I&quot;    &quot;L&quot;    &quot;F&quot;   
+## ./split_chain/1TAG_A.pdb &quot;T&quot;    &quot;T&quot;    &quot;S&quot;    &quot;I&quot;    &quot;V&quot;    &quot;L&quot;    &quot;F&quot;   
+## ./split_chain/1GG2_A.pdb &quot;D&quot;    &quot;T&quot;    &quot;S&quot;    &quot;I&quot;    &quot;I&quot;    &quot;L&quot;    &quot;F&quot;   
+## ./split_chain/1KJY_A.pdb &quot;D&quot;    &quot;T&quot;    &quot;S&quot;    &quot;I&quot;    &quot;I&quot;    &quot;L&quot;    &quot;F&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;D&quot;    &quot;T&quot;    &quot;S&quot;    &quot;I&quot;    &quot;I&quot;    &quot;L&quot;    &quot;F&quot;   
+##                          [,238] [,239] [,240] [,241] [,242] [,243] [,244]
+## ./split_chain/1TND_B.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;K&quot;    &quot;D&quot;    &quot;V&quot;    &quot;F&quot;   
+## ./split_chain/1AGR_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;F&quot;   
+## ./split_chain/1TAG_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;K&quot;    &quot;D&quot;    &quot;V&quot;    &quot;F&quot;   
+## ./split_chain/1GG2_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;F&quot;   
+## ./split_chain/1KJY_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;F&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;K&quot;    &quot;D&quot;    &quot;L&quot;    &quot;F&quot;   
+##                          [,245] [,246] [,247] [,248] [,249] [,250] [,251]
+## ./split_chain/1TND_B.pdb &quot;S&quot;    &quot;E&quot;    &quot;K&quot;    &quot;I&quot;    &quot;K&quot;    &quot;K&quot;    &quot;A&quot;   
+## ./split_chain/1AGR_A.pdb &quot;E&quot;    &quot;E&quot;    &quot;K&quot;    &quot;I&quot;    &quot;K&quot;    &quot;K&quot;    &quot;S&quot;   
+## ./split_chain/1TAG_A.pdb &quot;S&quot;    &quot;E&quot;    &quot;K&quot;    &quot;I&quot;    &quot;K&quot;    &quot;K&quot;    &quot;A&quot;   
+## ./split_chain/1GG2_A.pdb &quot;E&quot;    &quot;E&quot;    &quot;K&quot;    &quot;I&quot;    &quot;K&quot;    &quot;K&quot;    &quot;S&quot;   
+## ./split_chain/1KJY_A.pdb &quot;E&quot;    &quot;E&quot;    &quot;K&quot;    &quot;I&quot;    &quot;K&quot;    &quot;K&quot;    &quot;S&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;E&quot;    &quot;E&quot;    &quot;K&quot;    &quot;I&quot;    &quot;K&quot;    &quot;K&quot;    &quot;S&quot;   
+##                          [,252] [,253] [,254] [,255] [,256] [,257] [,258]
+## ./split_chain/1TND_B.pdb &quot;H&quot;    &quot;L&quot;    &quot;S&quot;    &quot;I&quot;    &quot;C&quot;    &quot;F&quot;    &quot;P&quot;   
+## ./split_chain/1AGR_A.pdb &quot;P&quot;    &quot;L&quot;    &quot;T&quot;    &quot;I&quot;    &quot;C&quot;    &quot;Y&quot;    &quot;P&quot;   
+## ./split_chain/1TAG_A.pdb &quot;H&quot;    &quot;L&quot;    &quot;S&quot;    &quot;I&quot;    &quot;C&quot;    &quot;F&quot;    &quot;P&quot;   
+## ./split_chain/1GG2_A.pdb &quot;P&quot;    &quot;L&quot;    &quot;T&quot;    &quot;I&quot;    &quot;C&quot;    &quot;Y&quot;    &quot;P&quot;   
+## ./split_chain/1KJY_A.pdb &quot;P&quot;    &quot;L&quot;    &quot;T&quot;    &quot;I&quot;    &quot;C&quot;    &quot;Y&quot;    &quot;P&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;P&quot;    &quot;L&quot;    &quot;T&quot;    &quot;I&quot;    &quot;C&quot;    &quot;Y&quot;    &quot;P&quot;   
+##                          [,259] [,260] [,261] [,262] [,263] [,264] [,265]
+## ./split_chain/1TND_B.pdb &quot;D&quot;    &quot;Y&quot;    &quot;N&quot;    &quot;G&quot;    &quot;P&quot;    &quot;N&quot;    &quot;T&quot;   
+## ./split_chain/1AGR_A.pdb &quot;E&quot;    &quot;Y&quot;    &quot;A&quot;    &quot;G&quot;    &quot;S&quot;    &quot;N&quot;    &quot;T&quot;   
+## ./split_chain/1TAG_A.pdb &quot;D&quot;    &quot;Y&quot;    &quot;N&quot;    &quot;G&quot;    &quot;P&quot;    &quot;N&quot;    &quot;T&quot;   
+## ./split_chain/1GG2_A.pdb &quot;E&quot;    &quot;Y&quot;    &quot;A&quot;    &quot;G&quot;    &quot;S&quot;    &quot;N&quot;    &quot;T&quot;   
+## ./split_chain/1KJY_A.pdb &quot;E&quot;    &quot;Y&quot;    &quot;A&quot;    &quot;G&quot;    &quot;S&quot;    &quot;N&quot;    &quot;T&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;E&quot;    &quot;Y&quot;    &quot;A&quot;    &quot;G&quot;    &quot;S&quot;    &quot;N&quot;    &quot;T&quot;   
+##                          [,266] [,267] [,268] [,269] [,270] [,271] [,272]
+## ./split_chain/1TND_B.pdb &quot;Y&quot;    &quot;E&quot;    &quot;D&quot;    &quot;A&quot;    &quot;G&quot;    &quot;N&quot;    &quot;Y&quot;   
+## ./split_chain/1AGR_A.pdb &quot;Y&quot;    &quot;E&quot;    &quot;E&quot;    &quot;A&quot;    &quot;A&quot;    &quot;A&quot;    &quot;Y&quot;   
+## ./split_chain/1TAG_A.pdb &quot;Y&quot;    &quot;E&quot;    &quot;D&quot;    &quot;A&quot;    &quot;G&quot;    &quot;N&quot;    &quot;Y&quot;   
+## ./split_chain/1GG2_A.pdb &quot;Y&quot;    &quot;E&quot;    &quot;E&quot;    &quot;A&quot;    &quot;A&quot;    &quot;A&quot;    &quot;Y&quot;   
+## ./split_chain/1KJY_A.pdb &quot;Y&quot;    &quot;E&quot;    &quot;E&quot;    &quot;A&quot;    &quot;A&quot;    &quot;A&quot;    &quot;Y&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;Y&quot;    &quot;E&quot;    &quot;E&quot;    &quot;A&quot;    &quot;A&quot;    &quot;A&quot;    &quot;Y&quot;   
+##                          [,273] [,274] [,275] [,276] [,277] [,278] [,279]
+## ./split_chain/1TND_B.pdb &quot;I&quot;    &quot;K&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;L&quot;    &quot;E&quot;   
+## ./split_chain/1AGR_A.pdb &quot;I&quot;    &quot;Q&quot;    &quot;C&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;E&quot;    &quot;D&quot;   
+## ./split_chain/1TAG_A.pdb &quot;I&quot;    &quot;K&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;L&quot;    &quot;E&quot;   
+## ./split_chain/1GG2_A.pdb &quot;I&quot;    &quot;Q&quot;    &quot;C&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;E&quot;    &quot;D&quot;   
+## ./split_chain/1KJY_A.pdb &quot;I&quot;    &quot;Q&quot;    &quot;C&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;E&quot;    &quot;D&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;I&quot;    &quot;Q&quot;    &quot;C&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;E&quot;    &quot;D&quot;   
+##                          [,280] [,281] [,282] [,283] [,284] [,285] [,286]
+## ./split_chain/1TND_B.pdb &quot;L&quot;    &quot;N&quot;    &quot;M&quot;    &quot;R&quot;    &quot;R&quot;    &quot;D&quot;    &quot;V&quot;   
+## ./split_chain/1AGR_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;R&quot;    &quot;K&quot;    &quot;D&quot;    &quot;T&quot;   
+## ./split_chain/1TAG_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;M&quot;    &quot;R&quot;    &quot;R&quot;    &quot;D&quot;    &quot;V&quot;   
+## ./split_chain/1GG2_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;R&quot;    &quot;K&quot;    &quot;D&quot;    &quot;T&quot;   
+## ./split_chain/1KJY_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;R&quot;    &quot;K&quot;    &quot;D&quot;    &quot;T&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;L&quot;    &quot;N&quot;    &quot;K&quot;    &quot;R&quot;    &quot;K&quot;    &quot;D&quot;    &quot;T&quot;   
+##                          [,287] [,288] [,289] [,290] [,291] [,292] [,293]
+## ./split_chain/1TND_B.pdb &quot;K&quot;    &quot;E&quot;    &quot;I&quot;    &quot;Y&quot;    &quot;S&quot;    &quot;H&quot;    &quot;M&quot;   
+## ./split_chain/1AGR_A.pdb &quot;K&quot;    &quot;E&quot;    &quot;I&quot;    &quot;Y&quot;    &quot;T&quot;    &quot;H&quot;    &quot;F&quot;   
+## ./split_chain/1TAG_A.pdb &quot;K&quot;    &quot;E&quot;    &quot;I&quot;    &quot;Y&quot;    &quot;S&quot;    &quot;H&quot;    &quot;M&quot;   
+## ./split_chain/1GG2_A.pdb &quot;K&quot;    &quot;E&quot;    &quot;I&quot;    &quot;Y&quot;    &quot;T&quot;    &quot;H&quot;    &quot;F&quot;   
+## ./split_chain/1KJY_A.pdb &quot;K&quot;    &quot;E&quot;    &quot;I&quot;    &quot;Y&quot;    &quot;T&quot;    &quot;H&quot;    &quot;F&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;K&quot;    &quot;E&quot;    &quot;I&quot;    &quot;Y&quot;    &quot;T&quot;    &quot;H&quot;    &quot;F&quot;   
+##                          [,294] [,295] [,296] [,297] [,298] [,299] [,300]
+## ./split_chain/1TND_B.pdb &quot;T&quot;    &quot;C&quot;    &quot;A&quot;    &quot;T&quot;    &quot;D&quot;    &quot;T&quot;    &quot;Q&quot;   
+## ./split_chain/1AGR_A.pdb &quot;T&quot;    &quot;C&quot;    &quot;A&quot;    &quot;T&quot;    &quot;D&quot;    &quot;T&quot;    &quot;K&quot;   
+## ./split_chain/1TAG_A.pdb &quot;T&quot;    &quot;C&quot;    &quot;A&quot;    &quot;T&quot;    &quot;D&quot;    &quot;T&quot;    &quot;Q&quot;   
+## ./split_chain/1GG2_A.pdb &quot;T&quot;    &quot;C&quot;    &quot;A&quot;    &quot;T&quot;    &quot;D&quot;    &quot;T&quot;    &quot;K&quot;   
+## ./split_chain/1KJY_A.pdb &quot;T&quot;    &quot;C&quot;    &quot;A&quot;    &quot;T&quot;    &quot;D&quot;    &quot;T&quot;    &quot;K&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;T&quot;    &quot;C&quot;    &quot;A&quot;    &quot;T&quot;    &quot;D&quot;    &quot;T&quot;    &quot;K&quot;   
+##                          [,301] [,302] [,303] [,304] [,305] [,306] [,307]
+## ./split_chain/1TND_B.pdb &quot;N&quot;    &quot;V&quot;    &quot;K&quot;    &quot;F&quot;    &quot;V&quot;    &quot;F&quot;    &quot;D&quot;   
+## ./split_chain/1AGR_A.pdb &quot;N&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;V&quot;    &quot;F&quot;    &quot;D&quot;   
+## ./split_chain/1TAG_A.pdb &quot;N&quot;    &quot;V&quot;    &quot;K&quot;    &quot;F&quot;    &quot;V&quot;    &quot;F&quot;    &quot;D&quot;   
+## ./split_chain/1GG2_A.pdb &quot;N&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;V&quot;    &quot;F&quot;    &quot;D&quot;   
+## ./split_chain/1KJY_A.pdb &quot;N&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;V&quot;    &quot;F&quot;    &quot;D&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;N&quot;    &quot;V&quot;    &quot;Q&quot;    &quot;F&quot;    &quot;V&quot;    &quot;F&quot;    &quot;D&quot;   
+##                          [,308] [,309] [,310] [,311] [,312] [,313] [,314]
+## ./split_chain/1TND_B.pdb &quot;A&quot;    &quot;V&quot;    &quot;T&quot;    &quot;D&quot;    &quot;I&quot;    &quot;I&quot;    &quot;I&quot;   
+## ./split_chain/1AGR_A.pdb &quot;A&quot;    &quot;V&quot;    &quot;T&quot;    &quot;D&quot;    &quot;V&quot;    &quot;I&quot;    &quot;I&quot;   
+## ./split_chain/1TAG_A.pdb &quot;A&quot;    &quot;V&quot;    &quot;T&quot;    &quot;D&quot;    &quot;I&quot;    &quot;I&quot;    &quot;I&quot;   
+## ./split_chain/1GG2_A.pdb &quot;A&quot;    &quot;V&quot;    &quot;T&quot;    &quot;D&quot;    &quot;V&quot;    &quot;I&quot;    &quot;I&quot;   
+## ./split_chain/1KJY_A.pdb &quot;A&quot;    &quot;V&quot;    &quot;T&quot;    &quot;D&quot;    &quot;V&quot;    &quot;I&quot;    &quot;I&quot;   
+## ./split_chain/4G5Q_A.pdb &quot;A&quot;    &quot;V&quot;    &quot;T&quot;    &quot;D&quot;    &quot;V&quot;    &quot;I&quot;    &quot;I&quot;</code></pre>
+<p>Having the generated pdbs object at hand facilitates a range of possibilities for protein structure analysis. This includes sequence identity/similarity, structural deviation, rigid core identification as well as principal component and normal mode analysis. Several Bio3D function are specifically designed to operate on the pdbs object, including functions seqidentity(), rmsd(), pca(), core.find(), nma() and many others. Below we calculate the pairwise sequence identity between the structures of the pdbs ensemble followed by the root mean square deviation (RMSD):</p>
+<p>calculate sequence identity</p>
+<pre class="r"><code>seqidentity(pdbs)</code></pre>
+<pre><code>##                          ./split_chain/1TND_B.pdb ./split_chain/1AGR_A.pdb
+## ./split_chain/1TND_B.pdb                    1.000                    0.693
+## ./split_chain/1AGR_A.pdb                    0.693                    1.000
+## ./split_chain/1TAG_A.pdb                    1.000                    0.694
+## ./split_chain/1GG2_A.pdb                    0.690                    0.997
+## ./split_chain/1KJY_A.pdb                    0.696                    0.994
+## ./split_chain/4G5Q_A.pdb                    0.696                    0.997
+##                          ./split_chain/1TAG_A.pdb ./split_chain/1GG2_A.pdb
+## ./split_chain/1TND_B.pdb                    1.000                    0.690
+## ./split_chain/1AGR_A.pdb                    0.694                    0.997
+## ./split_chain/1TAG_A.pdb                    1.000                    0.691
+## ./split_chain/1GG2_A.pdb                    0.691                    1.000
+## ./split_chain/1KJY_A.pdb                    0.697                    0.991
+## ./split_chain/4G5Q_A.pdb                    0.697                    0.994
+##                          ./split_chain/1KJY_A.pdb ./split_chain/4G5Q_A.pdb
+## ./split_chain/1TND_B.pdb                    0.696                    0.696
+## ./split_chain/1AGR_A.pdb                    0.994                    0.997
+## ./split_chain/1TAG_A.pdb                    0.697                    0.697
+## ./split_chain/1GG2_A.pdb                    0.991                    0.994
+## ./split_chain/1KJY_A.pdb                    1.000                    1.000
+## ./split_chain/4G5Q_A.pdb                    1.000                    1.000</code></pre>
+<p>calculate rmsd</p>
+<pre class="r"><code>#rmsd(pdbs)</code></pre>
+<p>calculate rmsd</p>
+<pre class="r"><code>#rd &lt;- rmsd(pdbs)</code></pre>
+</div>
+<div id="section-example-aplication-of-adenylate-kinase" class="section level1">
+<h1>Section example aplication of adenylate kinase</h1>
+<pre class="r"><code>aa = get.seq(&quot;1ake_A&quot;)</code></pre>
+<pre><code>## Warning in get.seq(&quot;1ake_A&quot;): Removing existing file: seqs.fasta</code></pre>
+<p>blast or hmmr search</p>
+<pre class="r"><code>b &lt;- blast.pdb(aa)</code></pre>
+<pre><code>##  Searching ... please wait (updates every 5 seconds) RID = F6ZG6AM9014 
+##  .
+##  Reporting 90 hits</code></pre>
+<p>plot a summary of search results</p>
+<pre class="r"><code>hits &lt;- plot(b)</code></pre>
+<pre><code>##   * Possible cutoff values:    198 -3 
+##             Yielding Nhits:    12 90 
+## 
+##   * Chosen cutoff value of:    198 
+##             Yielding Nhits:    12</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAAAk1BMVEUAAAAAADoAAGYAOjoAOpAAZrY6AAA6ADo6AGY6OgA6Ojo6OpA6ZrY6kNtmAABmADpmAGZmOpBmZjpmZmZmkJBmkNtmtv+QAACQOgCQOjqQOmaQZgCQtpCQ27aQ29uQ2/+zs7O2AAC2ZgC2Zjq2/7a2///bAADbkDrb25Db/9vb////AAD/tmb/25D//7b//9v///8gxqKXAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO2di3qjuJZGSdp2VZ9qk77UxK4zZ8YJXQnTFr68/9ONtsRFgMBCFkjgf30dV2IDsjsr2ltCl+gKQMBEvt8AAH1AUBA0EBQEDQQFQQNBQdBAUBA0EBQEDQQFQQNBQdBAUBA0DUGzSPLq590A0EAV9BxHa/ndZR89f5idD4BrOgQ9/646Wf/JSHDV2vLRmrd7TgazQP877hLUCt35ws78sdBUdbb9qAOCLp8ABC00bT1VexmAil5BeR66OiZbu4spz0FQYEufoNnTIV0dz7GxobdyUHtBEeKXz+AQf9lvr1zQa2rYhjeo/pCDgk4GC3qOX4WgmTtBARiIQQ2a8K8msg//6dBzMQAccDsHTTV3ki578dzpW13d8QRFiF8+Ft1MvBXfribFC7Ljvtl/D0GBPS77QYsa9OtUgoJHxbKj/rRBDgqmoLcVn9+uD6AVjxC/fGxDvLaXaepWPARdPtY5aLJuPTV5Kx48KgaCaqrQViteM3YPAAcYCKq51Tl5Kx4hfvnYhvhz3A7xk7fiIejysbgXL+O25k5nBwjxwDWW/aBZ9PSfTav/CYIC11jeSfpxOG1ex2rFa1pbCPHLx+WtTt58v/z7Y6R78fX5SxIIunyGCVreRtLeScpb8ec/xqhBMf8DVNjei/9yEMPxei5211uCoEBiKajBxe64jDJ/KQchfvkMz0GLMO9nsAhy0AdjuKDJ6piur9RcNwQhGbimt6N+e81oVqdxTz0EBa65MauT7rY377gbXswpCPHLx2pe/PnlAEHBJAzPQWkYU7INKMRf9rK9ltB6JzIzFv9mjSxZ/kld9ryddWNVlPyPLy0GvvBvsBxqUPR2MyVraskbN+InEFSuWaoISqjfy5/pLV/23Lk00gzFah55TfiRoi2Y8m8yGBoSIfaD1i4pO5tk9X/Z/0I3CG4ImsmOMdn70LtuT36kXH2KB4rLnnTWzCAAE+DyXnwH7gUtuusLQdepUIgE/b6haMzlpLGpShaSRVtlDoByt4tcra2EVhwpj+GPENQnFuNBh/6mRhM0r0e5QKK2FIJSAH860M+iu2GjTONTBE2qb/OlfNpH5oJy3RHig6O3o75jXRGzizmhfl+earh8tShRFfIoXghaoxI0U1tJ2fPPl4PmyDwZIDGzgZ8YjM2NEC+mFxtUpKNNmsvvy7+VglI9WOSg/KFf0Kz+3pPWR8mURhIXlOrb08Z8xV7gENsctOjbMWCsVrwqKDllKmjW6GVqR+/8SB4rqHY1aFeB0bAS1LQG7TrfEVUOyh+TrUZQXQ6aNvy87P8SNaQ+Wz19/ShbS2N9DjCY3jtJ/nPQGoztSNDTl1+NatDWupHp6p/9Vndk/upR1qDmC/aC8Qm8FV9A1T+jPxn6IYmaguq0a+WSdGhTvkz2g67zehM5qEdm2Q9aoArKWFwXVBirHi20S6M8lMvEQHROXYvva0eKga8yVCS3746CkRg6J6mMj6GsUc/kV/EPY6Ynnn4b702BkekV9CJStlAEzZ2UXzVN1UeNuRnqxPkyE0GV6l8VtP2oM/d9p/gLQsUixAcpqDTthqCdL+vqXBAEsxa0TYemZhVsZ5qg8XfIy8A5sxVU0uWQbQV738vw1z0zEXTwlI9OVa4jCmrmL9DjNMTPd436lrPTCapJKaBsxVBBDdZmWsYa9e5yUEt/oWkPdneSJt9pbibc5S/QYSco1qi3or/99uhRf2CIr1WOzaoSa9TfQUcW/PBRf+BgEZ6E5uMqLnvTmccPH+It6coAHlHTJn0hPssbSZpJZNgv3j1oQ+m4LwfFfvEu6ej7epQ2lMvxoJPvNPcQgqq0u2gX34aymBdf9oQ2gzz2i5+GzjbU49Cfg4obSdFra04F9oufEs042Mehd9KcbManq6PhAncI8SOyeEEtQryM7Nnzh+F4EQg6JgPuws6SwYJe8jm6VIP6FhTUuHGjf0njUYxy0OZcyK79PyDoRAwfSTVberuZhIe0zHKrAj03V+HSnu8OhPgaFoKGX526nRef6ZpNEHQq+nNQswwgNGa9cAMYhMlQv0A1bdIrqOjtHLA6EwQNltkmp7cbSa01uAwv5hSE+HvpmuQSDvd0MxkWAUHngXoHNRzu6ag3LAIhfk7MPgcNqQYFjwpyUGCC2SZ/5Y59RptRNLYCtOhmCqcVD0E9Y7TJX7ljH60GfHMl9eZWgOgHBfaYbPKn7NhH39zaEM1sywoI+uAYNpVMNvkr96Boqdfa5K/iVkVrKeh8l74BNXS36rX3UXfrcxwzxgVlcUShecd47cniuNo2hUU7OjSKT18O/Lzs+aM6e8vP+GTlBivVxZPiKPam/UuZydI3EHQkzIaayO0BPnll+b765FUhf0Fs8sfoqzybV5z8kTeq2ZMwVT6K/7LoZ3zQXjzaFj+8abtlZzJpDozEEEEZTy2FoORh3BaUN5J23FydoNd3IUfr4rQVYP+NrRuCXpobCxVPY9LcQjBc9kwIyoN2r6Bik5SfLwf2Raj5/H6t7I9izcWzaHPrzqudoFj6ZmkY5KD88X0jctCYUsC4nYPKMzbvFOsZS5UclO3/en5nZQ6ayg7QT/KzLGlYDprTJaieaDTexrs0CIQ3/dMuBW0Je8e594KyF1g2BEXZQZftuoBF/89C2dOXDUFRdtBlQ1CUHXTZEBRlB102OtpB0EBQEDQQFAQNBAVBA0FB0EBQEDQQFAQNBAVBA0FB0LgVNNPuUTc+tB7A2l/x6dZX2anHzz1N2U4FPb8cmlNCpiFd05QUX8WfNltPH/307ejtc09UtlNB6T3/MF+VxC3p1lPxlx9/bj199FQM3fVTtix19LKdCprxKj/xEmTFdFNPxadb7omfspPvGx5mPX3u04ZWuxm77KUISls8+Cme1yH+BF0deal+ys5ovZvxy15IiD/RKkKewixN8/KUXpAavlIb0TJczyvEe2skyVL9tdF8NZJk/eWpbKq9t/NqJHnr50lELfaY3Uzeyk7m180EgGsgKAgaCAqCBoKCoIGgIGggKAgaCAqCBoKCoIGgIGggKAgaCAqCBoKCoIGgIGggKAiau/fqBMA1TgXtsLZ8tAb7JC0fT9txCzvzx0JT1dn2ow4IunwCELTQtPVU7WUAKiAoCJpJc1B7QRHil4+nEF8/ADko6CIEQQEYCAQFQeNIUE2nqlMQ4pfPrEM8BF0+sxYUPCoQFARNr6DnOFodk63dxZyCEL98hof47OmQro7n2NhQCArsGSzoZb+9ckGv6bPpinoI8cA1PYKe41chaAZBgTcMalBaWtriYk5BiF8+tjloar4mKQQF9lj0g/JWfBQ9mS86jhAPXGPZD5qJO5tNdyEocM2NHLSDy16E/dO3enbqSFDN2DuE+OUzOMRTK76D8+8fyj8d59uiG70MQZePRSOps3+pqEG/TiUoeFR6a9B8EJ3G09NmvBwUgoKKEAeLIAd9SJwOt5u6FQ9Bl4+FoCKQ6/pBx23FA1DS20iinfWuujtJrVb82FM+wKNi0A+atu/Fj9qK14EQv3ys+0F1vU1jtuJ1yDd/2cu3ktAo1dfqTWaNOl7+4Vz2kdhdtZPyANlfsb7Kz7V2//aBAVbjQQlNDdrB2CGeGyXsUQQlmncUzjF5fNnzv5+0R7fqALHBPEG7Sp9jGBoQdjkof+npP5tWB+n4gv4iVOoXNJM9t6cNPdsz2ro6oIgR8k/SfIA2GB/LVvyPA/16J2jF5y2vIsSvU6rehKDfN7Q5OZeT3qVSyfM/KyUpyaq3T+K156/QAWleZ5Y1KfCAy35Q3ny//PtjpHvxzSvyr+hNXJoLKmpLISiJ9XSgn+lLJsX5X5MiaFJ9mw/Arh0pD0j+JZPR7Pln3J+2gvFwKWjeij//MXYNWr/tyQUtxviLqpDX4oWgNSpBM1U37t9Ls4qkA84xVcAJ15dyAyoEBEOvoDTZI9PWKCIYZuO34tuCUj1Y5KD8oV/QrN5GSlpNJuUAflIqPpD5HCwwPn2CyslIA1q1Y+WgEa/+C0HJH1NBm39cWbO9px7Aq2PZPJKNJzA1TvtB9YzWiq9y0CvFYo2guhw0bfh52f/FX1COrB3Ag4I8D00lP9j3g/oXVMLYTnSmf/nVqAZt9Y+lq39qkwSKA2SVyU+SF0KID4m+EC9/gadNACuLEIw66umbJGoK2niHmewHbTxLh6ryVQcksmKW9yR6ZrqA6bHrBzW5mFOo+i8EZSyuCyqMVY8WGqZRHsqLZnki7KsS6vIAukAka9Psxt1RMB5Ox4PqGVtQ8VX8w5jpyaffRntfwB2zFlQgnZRfNU3VR425GerE+dInKOV2aRQZjxWZZsCyKmj7UWfu+07xF8yLG/2gp81aNiGGX8wpavUvTLshaOfLujoXBIFVPyh1bQfQD6p58x2amlWwnWmCxl+jl8H9WAlKQylM+kF9Tfnocsi2grV8Gf6ORm+IX59Fh04AIX4wnTXhdQxBB/kLhtDfSFJ6EQdfzCnu5iS1nJ1A0NrLqGA7mHU305iT5hzkoG4q2AdneA6aD54MoZEUOi78BToMBA1msMh8MWq/Ierr6BQ0iUoCGCyypHnxJhXsI2pqHeLNgaB2dHUwPJams24kPQJoQ+mAoOHQ0ff12G2oLkHP8bZvAVuDizll2SFeQ7uLdvFtKKchHuuDTkJnG2qJjDAvHuuDToJmHOzj0C1oSrG9nAtRZ9RdPoAWCFr/gbrnxVwf3TRxrA/qAaO7sDNmWIgXcxvlvEfd8ot+1gcFOUNGosxG3GGC5rMmSVDciw+O4SOpZouloNir0ysWgs6sOi2xE3TyVjxCfJ27ZhIEqqnLED/5Lh8Q1BDzmQTBaepS0Mlb8eBOZpucdgtaDbcLYJcPcC9dk1xCZyaDRRDiXaLeQQ2HWQ+3g6DumXcOagVCPHCNnaBFhvqMRhIYF8saVD8dBCF+kZjtQJmWC7DfWFO22qIyrQ1FchviM92adxB0kRjtQJlwKcW4Itr7pbX/S+1qxQ6UtKmKsq8FclBgh8kOlLLLPF0d5QrqPSsiljtQ5lti3Fi4BoI+OJolJ5qY7EAp60z+2NoitXMHykUJihA/Et236qtHbhKLY1oq4ZPFTwf2GR3OccwYr0GZ3NMn2jEuKD824t7ScsFZ9F6dveVnlDtQ7uRl36MPHud3jEJ8XtKbttcLgj42JmOhaO+KdPV5fRc7UDIepON895/qbF5xMrEvjDD1mj+Kl7Po58uhcdks2orHKDqUL7xp7xvMRFAwEqaCXvYbKSj3kFefLUGv7087ugGuEfT6zltEjcuKZ9558Gebbf+dVwj64LRzUK2gvB786BWUJVH0/DM+sC9CTXKvtJ/CuHpBsQMlE9kqS5/frwsQFCF+QnQ5KGPJVuSglDLS9lTNHFQe+/WDx38R68sclJ8eR+9XJQdNeXznL2QiH+WtpQlz0NF4G+/SIBDe9E+7FLQlrOProewHLxuCouygy4agKDvosiEoyg66bAiKsoMuG4Ki7KDLRkc7CBoICoIGgoKggaAgaCAoCBoICoIGgoKggaAgaCAoCBq3gmbaDULGhxYGWPsrPt36Kjv1+LmnKdupoOeXQ3P90GlI17R+qa/iaeMJP2Wfvh29fe6JynYqKL3nH0P3S3ZFuvVU/OXHn1tPHz0Vc8/9lC1LHb1sp4JmvMpPvARZsTa5p+LTLffET9nJ9w0Ps54+92lD69iMXfZSBKWlzfwUz+sQf4KujrxUP2VntObN+GUvJMSfaCUhT2GWpnl5Si9IDV+pjWgZrucV4r01kmSp/tpovhpJsv7yVDbV3tt5NZK89fMkohZ7zG4mb2Un8+tmAsA1EBQEDQQFQQNBQdBAUBA0EBQEDQQFQQNBQdBAUBA0EBQEDQQFQQNBQdBAUBA0EBQETbi7fICHxamgHdbeedkr9kl6BDxtxx3JL6lpLqv6Q+2FTiDo8hlVUE11rFwzqj1qnqpZDEDFRDWokaCRg7cAFsZEOei9giLELx9POWjxkkEOCkEfGr+Cmp2PHBQ0CEpQAJrMRFCE+OUzgxDfDQRdPrMWFDwqEBQEzUwERYhfPrMO8RB0+cxaUPCoQFAQND2CnmNa8tH6Yk5BiF8+FiGeFrTeDigCggJ77HLQDkczMfzzqbEeOUI8cM3tHJQUfW4sPH7Zi5WeT9+O3RcDwAE3BKWa8pX7uKqbeP79Q/mn53xXIMQvn+EhnreSImlm1qhCixr0KwQFrhgs6Dlu5pgVpw1yUDAFfYK+SP+a1af2Mp2T5gC4BwNBU42gp83T/8StthNCPLBnYIhPqrUd2t1Ml39/kL7nP6ZqxUPQ5TM8B33pTEF5851a8NO14sGjYncvPq9B0Q8KxsZysEgWjZiDalpbCPHLZ1iIP8db6gYVGLTiNRezpljeQdUUgi6f2YwHvbnMCHggHPWD6s6/5y1BUCCx7Ac1uJg9mnVwEOKXj8t+0A6c1njIQR8Ml/2gHSAkA9cE2EgCoKJP0MveSzeTDoT45TO8mykxNlN/vkMg6PKxGA86ZMJc+3wA7qdX0NfO0zBpDkxDj6CXfee0+OkmzeWdTQjxy2d4DppFXVXoZJPmiu56+eYve5kVJ6tjUb2Lf7PG+5RzpUQbry9LkYMN1nk4iDo/LZgEixy0c7DIZJPm6veTuHKiUlcElW+0rtY5pnd82fMMJO1bHOX05aCeNHAZFTAJlv2gU02aawr6i3CqX9BM/kmdNvRs333a2iAD8xu6YEocddSPNmmuloPyrDilek4I+n1DQZnLSX8syrz9LNoq5mXVHxEpWOuZSJU687QZ2mUBHGMx3I4H+dUx0f3meHTM2rF/tFZ89CYuzQUVtaUQlAL404F+pi9Zped1uiKo0pd72W+v6epYHZn8q0pSB/f5AtdYNJKeDimpoJk09+NALfippnwUgZ76Ffg7koJuRRQvBK2/8dK2TG0lZc8/X2pZJ9W78u9veJ8vmIbebiZR4+iyM958P/023dI3uaCM7dbiXRU5KH/oFzSrt5ESTZNJHpt1r1EBvHKjo54E1Q1Y/vvAK9ErSdp9vjsiXv1HV0ateGGUqaBZo5dJ128m21JJY/EpMD2DQ3xRg+p+eXIcSfOFcXPQXFAelFuCxkyXg6YNPy/7v/gLtSPzviZE+AEwxka5rm0Ompp3YI97q7MQ9PTl17qgjL6qwxiTgrbeeLr6Z6+IKOvOrOqSAiaw/Ev+YCTrPUrfasW3OztNL+YekYNeKZVsCrpV/pfRl5SuUSvSobV0JRFdVnQUUlBzVEFrshqdMZiZDFgu+0Gv5GncEJQb+1kcWQqaRnkoL8YUUKpSH1+QFPc30UtvzmiCzmbasQ7lzecfV4YNzeO19X+j2ZarLmUSesZKuWaL8j/Eo6DljfgwRtQryI+rPqrP122VZB0tIKP/cRbx6YGU9puDyl6aAflZEIK2f/hbfID2/6VaXdxf3PA3WPzwOLKOg8F40NS4j3CaKR/idz5E0NozrQBVP7SVM9Qt7kwsFA81b6p2NtBjMdxO9r1MvbKIjvab14jRlkQj2rVZvWnErpnbPrvrUVN2/UrqUaCJVUc9YX6XJaApHy096pK0E321idVZPRsJeqtsMITbI+rTwHLQAbRrQm2N11tFqle6KWiH951/HI232woKYWA2kSEt7+MZ9J0XlV5zyHub2x312vpz6klzdnOSblRv7UN7EkuTHFSjdPvsdvbR826DwGgiQ8JlEDfkWLTjDetd7x9bllsl5z7kuOwHnXynOctJc111Uregd6GTsuMgs8o9DEwmMsjRDLw9zfZ0W+993fdZxDjjazn3IceloJPvNOcajbMOIquRXJ0JQlf24R2TiQyyM5I/sg0NjPjk4uWfpTWRgTz+bzqzPvehg/tq0Ml2mpsJ5remujPYrvbbSNzoAaPnuaAsjvsnMuSCRq+MV7ZM3GzOP1hrIgMNIHuP5L1pRdCOd2B5J2nqneaWNy++3QOmOeba66+Tt3Ht7WDIFYu4Yp+9ExnyKYrRaxbtGJm6K99sYyID9Q4xfilRXCUo479j3TsIfdJczvIEVdFI19WL6jpFNRX0st/UJzLEjGkaSVzQItYrL8k2VvEpKVGVgvJnSND8szoXlMbU91wM3EFnJ5UvQXmdeGMiQ8JDLa8q5WIDtdxSdlcWRdABUlBR037c+GCWjaRYG/whqCs0TaWRGvmGOShjyTaJPllD0Ob0hK8f7eUI6hMZdp/lOi41QYfmoDeg0cBT1qDLDvFtdB7239wdsZtfDso4fdncmAomore8/5is1SfFRIbaH5joqK8L6no8aPr0vxB0PExEq1ez145OqiHK6m9T5KOG6hMZKAdV+o7EykEi86QHNQUtJzKo+Yq8k6TmoO4HLIu1j3ouBsamW9COAV9mF2ydlwt6bkxkEMaW51LWJ4XI73nqJzLUBDUZiDSTEfWgjuam6bUplzNB66Uao5/IMDQHmYmgDxfi+9E08tsdqzrRTAZnW7TGtMlE10SGLpYyJwnUg7vGpHrV2jVMVnfdjqEyRm+n+Ub+HjhTdtaCgho3BDUaqOL87Ti/rACCzpLOzqYbp10h6DggxN9L5zQrxxe3Z9YhHoLeSbuDdJwK7w5mLSi4k7aOwQmqB4I+BhDUxfndIMTfyzhzCFwyRYgfjbfxLg0C4U3/tEtBW8I6vh7KfvCyISjKDrpsCIqygy4bgqLsoMuGoCg76LIhKMoOumx0tIOggaAgaCAoCBoICoIGgoKggaAgaCAoCBoICoIGgoKgcStoFplv5O0S2st+7a/4dOur7NTj556mbKeCnl8OtzcZGYN0TUuU+yqe1v3zU/bp29Hb556obKeC0nturX83FenWU/GXH39uPX30VCw146dsWeroZTsVNONVfuIlyIrtRzwVn265J37KTr5veJj19LlPG1p1ceyylyIoDzWeiud1iD9BV0deqp+yM1q5dvyyFxLixTLpnsIsTfPylF6QGr5SG9EyXM8rxHtrJMlS/bXRfDWSZP3lqWyqvbfzaiR56+dJRC32mN1M3spO5tfNBIBrICgIGggKggaCgqCBoCBoICgIGggKggaCgqCBoCBoICgIGggKggaCgqCBoCBoICgImnB3+QAPi1NB7zy/G+yTVMdyM9mgmfVWiPLNX/bPYrx2sjqeYzkyVvybNUbJymHdND8+2vZcVD2gHAnuZxj+QG5txz1LZi2ogLEdDdtm7J0EjcsNdnNZy5rkHJPHl/3TgX3KE5S9eKsfuJ87lkZr+v4cR+/y5Tj6qJ/Rcbb25eJ9Djxb+1n7pLMWdH61beiCKkmIUOrLgdH8giPjUhZblEtBy19UFkXPH/w3sXllNA3io7abufLDacNP44aSkHSKeJl/817b/7zrbN3LxfsceLZum0L1gm1sBW3veRw84wsqFVMfNU91vRzlV6XqXwiargtBv2+iKOZyxif+zepY/s/Pom3GJct//1l0KFxI+bPneNvQgx9ApzAhaH6utaDKPte2ektuWTcgB60dqlw2uNTAU4iXiqmPmqduvHyN3qJcUC5kLigP4Gl0oJ+pBiVLOU9i0qsiaFLVoJf9hleox+LInfwVJaIGvbK8Br3eI+h9L6u4s0fzt+O6CEfMWND8BZ6Drq/p6lPmoBvGrYwp1Ddz0FJQ/hQ1gsp07/nny6GRAVLlyURNm+eg7I4ctBaxzc/WqeIs/tb+ONTLBieonsAFrQf6y57WBduWrXj+cK4ErchEDkrfUBupIqn/qB6QPX80vrHA9ndua6Omadb1nnS1NHJQ+eQ9OWhx3bdSUDLIQFD5b6OXKWvO2q4OcCLoxL/zepPn2vHHUavcQ2bO3UwiB80FvSZbjaCNHFRIljb8vOz/4i8oRyoHuBF0WswELV4Pvr6cs6A5UtDTl1+NatC0WV+mq3/2qrLqAYsXdK44ElRz33QEpKA8lWwK2rhfJCSjlWRr0KGqfrUD5iioUQ46d2ZSgxa3OoWg57guqDBWPVpIlkZ5KM/PEssTFt8T5QHlKbVvwMTMOsT3Dxa5UZOcfnP/hsZgsjowzMp21oL2cisXy/pGjIRDu6uy8Xr/3fv2oTcKmgePIOjfvlbKH4bmtlL7LoBRY/2G6hDUPb0hfiGt2baBnTdKja7R3TPafw1fDA/xYrxkJAb6mBFoDjoXOm6XOxc00P9FwwVNhjZoPYX4ZdG6XV7Gd4McVA3ugVaUA+kRtNW9OOxi4H4GtItqZ7S/ny29gg5db9xXiAdLYHCIVzu1m2RKH3fX+S6BoMtneA4q5kRouezFK6dvtRs4CPHAOV2CnuNqZnK7rXT+/UP5R38xABxg1w9a1KBfpxIUIX75DA7xtOMloRs+IQdVIgcF7rAWNA2gox48Kp2CJlUO2u4OpeQzjRqD3CAocI9BDaoh3499ulY8QvzycTncjgtKe6ZWrfixR9RD0OUzPAetepqa/aHnePV//8X/+QP9oGBc+mpQOSk3i141d+VPm6fD6ctkrXjwqBjc6kxXx7TZHDK4mFMQ4pePRYiXkT17/jCcSQZBgT0Wg0VkYKca1Leg4FExykFb45qK9tMz7sWDcentZhIecgnbQ+v1faQI8cAet9OOM12zCYICe5Y7Lx4smJnM6gSPykxmdSLELx+LftBwZnVC0OVj3VFvDkI8cI3lrE6DiwHggP6O+oFVKEI8sMd+uF0ArXgIunzQDwpmCAQFQXPrXvzqmJh0NmHKB7iX4SE+ezqktF2BcXcoBAX2WI0HpaH0mBcP/HGjo54ENd+YBYIC1xjUoInZhKTW+S5BiF8+tjloa0fBbiAosMeiH1R01TdXCOsBIR64Bv2gIGhmIihC/PKxvtUZQisegi6fWQsKHhUICoJmJoIixC+fWYd4CBo0w3fE0+BU0Kk38gIhY7ZTuB1dgvbvk4SNvJZJbX968/pwiKBDq1m7ftDJN/JCiJ8Cs828+88zOlSLy5mlxskAAAOoSURBVCkf2MhrkdgKOqDOnUjQyTfyAlPQIehlL5O8hEavy5FD4t+sNoooLXzI+sZv0CU/5QFZxwYIdRzd6hx7ygeYBH0OetlHYoUERVCivrBHwp0Tuw9n/JtMZ2hx2U+uuzyAP3OO1/01r30OOulGXgjxHrnsf9nsWL+gcmJQujrKdbmT9pofRZUsjhSLgoja9PmjeMFliMdGXo8Er0FTXs9dk+iTxd83FJS5nJTlVTWUrBL5o9zDXZkmRN+SlLXsk+0i8dNpU77A3rT1qLWg9Y28Bp4PgiGPr11hlp7ngnIh2fWdalAuYvp0oNqTvmRbhKeUuaDRq9ybSOk7zydmlEeKq/JLiDQ3iT5uNMosBcVGXguhqL6uej3E81xQrtinFHRL1d7rOY4ZU0N8XnFGr2VVWr6UPf98yTPO4hna/5VKZSIxEC+4FXTyjbwQ4kfCTNA1Y7utFPRVJJ9FDVohG0lc0IjSVfmYO5lEzYyUX5ILX/OY8d+xS0G1QNDZYSioCNoiB+0SlLbHpqqS8VqLB+znjypsaxahYywiNdX5mE5z0A4Q4ueHUQ5KNWCyzVvxFNtbOag8+vT1g/FYz6hxXgp62f/Ff2oeuXk1WyIZgoJbSEFPX34VgjLuVdzKQSW8McT2lF6+r6uGT7r6Z6+IKLNV0YqS3/YzE0ER4j2Sr2ScRKqgr7LvqKh4qcNdppQs2vFvdmVnP53CIqW7h+K67C2t9+fPevlFCOqRXNBzXBeUss5jmbrS8DfpW37Ps1igO+HNIeoHqEiK+5v1RZVmLSgIByVd7R1RcvrN5KhbQFBgT6962dbkqFvMRFCE+DDpG+fx98HkqIopQvxovI13aRAIb/qnXQraEtbx9VD2g5cNQVF20GVDUJQddNkQFGUHXTYERdlBlw1BUXbQZaOjHQQNBAVBA0FB0EBQEDQQFAQNBAVBA0FB0EBQEDQQFASNW0GzWyvrjcRlH9FKAb6KpzWB/JSdevzc05TtVNDzy6G5wO00pGtaYNdX8bQclp+yT9+O3j73RGU7FZTe8w/zjWjdkm49FX/58efW00dPxRwgP2XLUkcv26mgtD5j4iXIlstDeig+3XJP/JSdfN/wMOvpc9NaXeOXvRRBeajxVDyvQ/wJujryUv2UndHKteOXvZAQL1bd8xRmaZqXp/SC1PCV2oiW4XpeId5bI0mW6q+N5quRJOsvT2VT7b2dVyPJWz9PImqxx+xm8lZ2Mr9uJgBcA0FB0Pw/hdJ/8wqK2HIAAAAASUVORK5CYII=" /><!-- --></p>
+<p>using only top scoring hits</p>
+<pre class="r"><code>head(hits$pdb.id)</code></pre>
+<pre><code>## [1] &quot;1AKE_A&quot; &quot;4X8M_A&quot; &quot;4X8H_A&quot; &quot;3HPR_A&quot; &quot;1E4V_A&quot; &quot;5EJE_A&quot;</code></pre>
+<p>fetch pdbs</p>
+<pre class="r"><code>files5 &lt;- get.pdb(hits$pdb.id, path=&quot;pdbs&quot;, split = TRUE, gzip = TRUE)</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/1AKE.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/4X8M.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/4X8H.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/3HPR.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/1E4V.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/5EJE.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/1E4Y.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/3X2S.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/4K46.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/4NP6.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/3GMT.pdb exists. Skipping download</code></pre>
+<pre><code>## Warning in get.pdb(hits$pdb.id, path = &quot;pdbs&quot;, split = TRUE, gzip = TRUE):
+## pdbs/4PZL.pdb exists. Skipping download</code></pre>
+<pre><code>## 
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |=====                                                            |   8%
+  |                                                                       
+  |===========                                                      |  17%
+  |                                                                       
+  |================                                                 |  25%
+  |                                                                       
+  |======================                                           |  33%
+  |                                                                       
+  |===========================                                      |  42%
+  |                                                                       
+  |================================                                 |  50%
+  |                                                                       
+  |======================================                           |  58%
+  |                                                                       
+  |===========================================                      |  67%
+  |                                                                       
+  |=================================================                |  75%
+  |                                                                       
+  |======================================================           |  83%
+  |                                                                       
+  |============================================================     |  92%
+  |                                                                       
+  |=================================================================| 100%</code></pre>
+<p>align structures</p>
+<pre class="r"><code>pdbs5 &lt;- pdbaln(files5)</code></pre>
+<pre><code>## Reading PDB files:
+## pdbs/split_chain/1AKE_A.pdb
+## pdbs/split_chain/4X8M_A.pdb
+## pdbs/split_chain/4X8H_A.pdb
+## pdbs/split_chain/3HPR_A.pdb
+## pdbs/split_chain/1E4V_A.pdb
+## pdbs/split_chain/5EJE_A.pdb
+## pdbs/split_chain/1E4Y_A.pdb
+## pdbs/split_chain/3X2S_A.pdb
+## pdbs/split_chain/4K46_A.pdb
+## pdbs/split_chain/4NP6_A.pdb
+## pdbs/split_chain/3GMT_A.pdb
+## pdbs/split_chain/4PZL_A.pdb
+##    PDB has ALT records, taking A only, rm.alt=TRUE
+## ...   PDB has ALT records, taking A only, rm.alt=TRUE
+## ..   PDB has ALT records, taking A only, rm.alt=TRUE
+## ...   PDB has ALT records, taking A only, rm.alt=TRUE
+## ....
+## 
+## Extracting sequences
+## 
+## pdb/seq: 1   name: pdbs/split_chain/1AKE_A.pdb 
+##    PDB has ALT records, taking A only, rm.alt=TRUE
+## pdb/seq: 2   name: pdbs/split_chain/4X8M_A.pdb 
+## pdb/seq: 3   name: pdbs/split_chain/4X8H_A.pdb 
+## pdb/seq: 4   name: pdbs/split_chain/3HPR_A.pdb 
+##    PDB has ALT records, taking A only, rm.alt=TRUE
+## pdb/seq: 5   name: pdbs/split_chain/1E4V_A.pdb 
+## pdb/seq: 6   name: pdbs/split_chain/5EJE_A.pdb 
+##    PDB has ALT records, taking A only, rm.alt=TRUE
+## pdb/seq: 7   name: pdbs/split_chain/1E4Y_A.pdb 
+## pdb/seq: 8   name: pdbs/split_chain/3X2S_A.pdb 
+## pdb/seq: 9   name: pdbs/split_chain/4K46_A.pdb 
+##    PDB has ALT records, taking A only, rm.alt=TRUE
+## pdb/seq: 10   name: pdbs/split_chain/4NP6_A.pdb 
+## pdb/seq: 11   name: pdbs/split_chain/3GMT_A.pdb 
+## pdb/seq: 12   name: pdbs/split_chain/4PZL_A.pdb</code></pre>
+<p>vector containing pdb codes</p>
+<pre class="r"><code>#ids5 &lt;- basename.pdb(pdbs5$ids)</code></pre>
+<p>draw an alignmen</p>
+<pre class="r"><code>plot(pdbs5, labels=ids)</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --> sequence conservation analysis</p>
+<pre class="r"><code>cons &lt;- conserv(pdbs5, method = &quot;entropy22&quot;)</code></pre>
+<p>sse annotations</p>
+<pre class="r"><code>sse &lt;- pdbs2sse(pdbs, ind=1, rm.gaps = FALSE)</code></pre>
+<pre><code>## Extracting SSE from pdbs$sse attribute</code></pre>
+<p>plot conservaion per residue</p>
+<pre class="r"><code>plotb3(cons, sse=sse, ylab=&quot;Sequence entropy&quot;)</code></pre>
+<pre><code>## Warning in plotb3(cons, sse = sse, ylab = &quot;Sequence entropy&quot;): Length of
+## input 'sse' does not equal the length of input 'x'; Ignoring 'sse'</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>PCA</p>
+<pre class="r"><code>core &lt;- core.find(pdbs5)</code></pre>
+<pre><code>##  core size 203 of 204  vol = 968.435 
+##  core size 202 of 204  vol = 929.83 
+##  core size 201 of 204  vol = 896.725 
+##  core size 200 of 204  vol = 870.563 
+##  core size 199 of 204  vol = 842.313 
+##  core size 198 of 204  vol = 818.551 
+##  core size 197 of 204  vol = 789.425 
+##  core size 196 of 204  vol = 758.485 
+##  core size 195 of 204  vol = 733.831 
+##  core size 194 of 204  vol = 707.91 
+##  core size 193 of 204  vol = 680.579 
+##  core size 192 of 204  vol = 652.935 
+##  core size 191 of 204  vol = 627.823 
+##  core size 190 of 204  vol = 606.714 
+##  core size 189 of 204  vol = 589.891 
+##  core size 188 of 204  vol = 568.49 
+##  core size 187 of 204  vol = 548.134 
+##  core size 186 of 204  vol = 525.13 
+##  core size 185 of 204  vol = 503.515 
+##  core size 184 of 204  vol = 481.666 
+##  core size 183 of 204  vol = 461.273 
+##  core size 182 of 204  vol = 440.71 
+##  core size 181 of 204  vol = 417.769 
+##  core size 180 of 204  vol = 397.549 
+##  core size 179 of 204  vol = 379.747 
+##  core size 178 of 204  vol = 363.953 
+##  core size 177 of 204  vol = 350.568 
+##  core size 176 of 204  vol = 335.769 
+##  core size 175 of 204  vol = 321.06 
+##  core size 174 of 204  vol = 308.453 
+##  core size 173 of 204  vol = 297.263 
+##  core size 172 of 204  vol = 284.751 
+##  core size 171 of 204  vol = 273.174 
+##  core size 170 of 204  vol = 265.125 
+##  core size 169 of 204  vol = 254.902 
+##  core size 168 of 204  vol = 241.569 
+##  core size 167 of 204  vol = 231.662 
+##  core size 166 of 204  vol = 221.509 
+##  core size 165 of 204  vol = 216.205 
+##  core size 164 of 204  vol = 205.327 
+##  core size 163 of 204  vol = 197.846 
+##  core size 162 of 204  vol = 191.037 
+##  core size 161 of 204  vol = 183.505 
+##  core size 160 of 204  vol = 177.354 
+##  core size 159 of 204  vol = 171.638 
+##  core size 158 of 204  vol = 166.758 
+##  core size 157 of 204  vol = 161.865 
+##  core size 156 of 204  vol = 154.239 
+##  core size 155 of 204  vol = 149.433 
+##  core size 154 of 204  vol = 144.722 
+##  core size 153 of 204  vol = 137.613 
+##  core size 152 of 204  vol = 132.143 
+##  core size 151 of 204  vol = 125.562 
+##  core size 150 of 204  vol = 119.529 
+##  core size 149 of 204  vol = 115.309 
+##  core size 148 of 204  vol = 110.573 
+##  core size 147 of 204  vol = 105.894 
+##  core size 146 of 204  vol = 101.137 
+##  core size 145 of 204  vol = 96.354 
+##  core size 144 of 204  vol = 92.483 
+##  core size 143 of 204  vol = 88.47 
+##  core size 142 of 204  vol = 84.192 
+##  core size 141 of 204  vol = 80.766 
+##  core size 140 of 204  vol = 77.906 
+##  core size 139 of 204  vol = 75.008 
+##  core size 138 of 204  vol = 72.256 
+##  core size 137 of 204  vol = 69.963 
+##  core size 136 of 204  vol = 67.62 
+##  core size 135 of 204  vol = 65.623 
+##  core size 134 of 204  vol = 62.213 
+##  core size 133 of 204  vol = 60.378 
+##  core size 132 of 204  vol = 58.229 
+##  core size 131 of 204  vol = 56.776 
+##  core size 130 of 204  vol = 54.987 
+##  core size 129 of 204  vol = 53.551 
+##  core size 128 of 204  vol = 52.026 
+##  core size 127 of 204  vol = 49.887 
+##  core size 126 of 204  vol = 48.589 
+##  core size 125 of 204  vol = 46.699 
+##  core size 124 of 204  vol = 44.676 
+##  core size 123 of 204  vol = 42.571 
+##  core size 122 of 204  vol = 40.6 
+##  core size 121 of 204  vol = 38.353 
+##  core size 120 of 204  vol = 36.254 
+##  core size 119 of 204  vol = 34.545 
+##  core size 118 of 204  vol = 32.536 
+##  core size 117 of 204  vol = 31.051 
+##  core size 116 of 204  vol = 29.587 
+##  core size 115 of 204  vol = 28.793 
+##  core size 114 of 204  vol = 28.046 
+##  core size 113 of 204  vol = 27.305 
+##  core size 112 of 204  vol = 26.559 
+##  core size 111 of 204  vol = 25.716 
+##  core size 110 of 204  vol = 24.943 
+##  core size 109 of 204  vol = 24.088 
+##  core size 108 of 204  vol = 23.13 
+##  core size 107 of 204  vol = 22.26 
+##  core size 106 of 204  vol = 21.287 
+##  core size 105 of 204  vol = 20.498 
+##  core size 104 of 204  vol = 19.653 
+##  core size 103 of 204  vol = 19.03 
+##  core size 102 of 204  vol = 18.384 
+##  core size 101 of 204  vol = 17.716 
+##  core size 100 of 204  vol = 17.054 
+##  core size 99 of 204  vol = 16.541 
+##  core size 98 of 204  vol = 16.004 
+##  core size 97 of 204  vol = 15.332 
+##  core size 96 of 204  vol = 14.675 
+##  core size 95 of 204  vol = 14.103 
+##  core size 94 of 204  vol = 13.534 
+##  core size 93 of 204  vol = 12.943 
+##  core size 92 of 204  vol = 12.36 
+##  core size 91 of 204  vol = 11.806 
+##  core size 90 of 204  vol = 11.287 
+##  core size 89 of 204  vol = 10.762 
+##  core size 88 of 204  vol = 10.282 
+##  core size 87 of 204  vol = 9.81 
+##  core size 86 of 204  vol = 9.383 
+##  core size 85 of 204  vol = 8.99 
+##  core size 84 of 204  vol = 8.627 
+##  core size 83 of 204  vol = 8.288 
+##  core size 82 of 204  vol = 7.937 
+##  core size 81 of 204  vol = 7.611 
+##  core size 80 of 204  vol = 7.287 
+##  core size 79 of 204  vol = 7.013 
+##  core size 78 of 204  vol = 6.759 
+##  core size 77 of 204  vol = 6.493 
+##  core size 76 of 204  vol = 6.231 
+##  core size 75 of 204  vol = 5.974 
+##  core size 74 of 204  vol = 5.682 
+##  core size 73 of 204  vol = 5.399 
+##  core size 72 of 204  vol = 5.117 
+##  core size 71 of 204  vol = 4.872 
+##  core size 70 of 204  vol = 4.659 
+##  core size 69 of 204  vol = 4.447 
+##  core size 68 of 204  vol = 4.288 
+##  core size 67 of 204  vol = 4.115 
+##  core size 66 of 204  vol = 3.923 
+##  core size 65 of 204  vol = 3.742 
+##  core size 64 of 204  vol = 3.535 
+##  core size 63 of 204  vol = 3.35 
+##  core size 62 of 204  vol = 3.209 
+##  core size 61 of 204  vol = 3.032 
+##  core size 60 of 204  vol = 2.829 
+##  core size 59 of 204  vol = 2.669 
+##  core size 58 of 204  vol = 2.562 
+##  core size 57 of 204  vol = 2.419 
+##  core size 56 of 204  vol = 2.316 
+##  core size 55 of 204  vol = 2.195 
+##  core size 54 of 204  vol = 2.098 
+##  core size 53 of 204  vol = 1.993 
+##  core size 52 of 204  vol = 1.881 
+##  core size 51 of 204  vol = 1.787 
+##  core size 50 of 204  vol = 1.682 
+##  core size 49 of 204  vol = 1.598 
+##  core size 48 of 204  vol = 1.479 
+##  core size 47 of 204  vol = 1.387 
+##  core size 46 of 204  vol = 1.332 
+##  core size 45 of 204  vol = 1.238 
+##  core size 44 of 204  vol = 1.155 
+##  core size 43 of 204  vol = 1.07 
+##  core size 42 of 204  vol = 0.967 
+##  core size 41 of 204  vol = 0.906 
+##  core size 40 of 204  vol = 0.845 
+##  core size 39 of 204  vol = 0.792 
+##  core size 38 of 204  vol = 0.744 
+##  core size 37 of 204  vol = 0.695 
+##  core size 36 of 204  vol = 0.648 
+##  core size 35 of 204  vol = 0.596 
+##  core size 34 of 204  vol = 0.553 
+##  core size 33 of 204  vol = 0.523 
+##  core size 32 of 204  vol = 0.496 
+##  FINISHED: Min vol ( 0.5 ) reached</code></pre>
+<p>superimpose all structures to core</p>
+<pre class="r"><code>pdbs5$xyz= pdbfit(pdbs5,core)</code></pre>
+<p>perform pca</p>
+<pre class="r"><code>pc.xray &lt;- pca(pdbs5)
+plot(pc.xray)</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAAAzFBMVEUAAAAAABcAADoAAGYAF2YAKJAAOjoAOpAASbYAZmYAZpAAZrYNAAAoADoqAGYxUTIyABc6AAA6ADo6AFg6AGY6OgA6OpA6ZmY6ZrY6kJA6kLY6kNtYAABmAABmADpmAGZmOgBmOpBmZjpmZrZmkJBmtv9m2/+QOgCQOjqQOmaQkDqQtpCQvJCQ2/+2WAC2ZgC2Zjq2kDq225C2/9u2//+8kDq+vr7bkDrbtrbb25Db/7bb/9vb////nDr/tkn/tmb/25D//7b//9v///+k0FcgAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAdb0lEQVR4nO2dC3vkOFaGTQIECJdNs9O7TMg0w26oHiAUy4b2DoR1Xf7/f8K6+FaWZUs+ko+l731mtzpVtiWfesuWZPuouALAmGLrCgBgA4IC1kBQwBoIClgDQQFrIChgDQQFrIGggDUQFLAGggLWQFDAGggKWANBAWsgKGBNbEELd755rLOCyAFZif9+xgrr2h0kCVPQ8r7R18LC3gT1XjNSWDMQNC7sKziEfXUhKBX6ZMS3gkb8qhuxIQNBiWiaS2wraMarugRNw+Vlbbx+hPKiNJbaBn0GgupOEnldzIVtvL6RowrBM015EJQ2nhD0+PChXh9JyosTScaneOJ46n3NV9DzD2/qH6dfvlOUFyuSXDtJ1PG8qn2FoDsTVJOFoIJ8BW1PRc2pKXR5pDCsYNbxDLKDJW2jPiocK5hzPGPtINWl2eCwr6Aim3iG2MHzy/P19FQUhk4n2qAeEMdTk28b9HJ4Vu35ck/DTA38BKWOpyZfQUWvU8YSvXgSqOOpyVfQy9e3awVByaCOpyZfQa/V3dvl8CpPTRTl5S4odTw1GQtat+pF//LuLVZ5lHCsYM7x3MHdTHFhX8Eh7KsLQYlhX8Eh7KubgaDZt0FtoA1KDASlBYISA0FpgaDEQFBaICgxEJQWCEoM+++ffQWHsK8uBCWGfQWHsK8uBCWGfQWHsK9uBoKiDWoBbVBiICgtEJQYCEoLBCUGgtICQYmBoLRAUGLYf//sKziEfXUhKDHsKziEfXUhKDHsKziEfXVZCrrD9IstHL9x4vSLiozboLtMv9jAUFDy9IuSfAVFdjtakN2OGAhKCwSlhjhdYO6CBkq/mLSgl4NstRsCJsk5XaAXiCfp+qcnnUOgMicTMJaTS7pADxBP2vXPP3Y/9MtP42aRpjQeD5IPqDuIZ8j1DahELYJ7dJIIoI6nJuk26FWcjori1fzR6Um0lsh+8XkIGi+emsQFPX95l/8zU9a/dQjqQsR4atIVVI7L2QNan5YeIehCYsdTk66g18uh/kFbTkmSyjxoAkHHRI6nJmFBxQ/a0F4PWF5ENqkg4km+vm9Ikw+oJ4gn4frqbOQX0uQD6gHiSbt+2563NOopy0u9DRo7npp026AzHU7y8rIR1AcIamCuw0lcXuqCxo6nJmFBI5eXvKBrgKDEQFBaIKgB2+SmIcqLygYVRDxp17dObhqgvLjEryDiSby+dXLTAOXFZZtr8Ygn4frWyU0DlJd6GzR2PDUJt0Ftk5sGKC91QWPHU5OwoLbJTQOUl7ygkeOpSVnQuOWlL+gKICgxEJQWCEoM+++ffQWHsK/uFsNMtqcMA5QXlw2GmRBP6vVNadYGn2ecCcMHxJN4/ZkBEaRfdCRuPDX5tkGR3Y4WZLcjBoLSAkGpQfpFWpB+0ZPJa8e06QKzETRSPDUZCOpUTi7pAiORTTxD7KBIxyp+7bRtpkgwrGDW8fRf35wrSCDaTKK9lGVAvUE8qdafu/Khep3V/Tt68YuIHU9Nwm1QW77KazssUj38DEEXETmemoQFteWrFOhhkRIZlpcSNZ6apAWdzlcpuBx0RCHoUmLGU5O2oJP5KgOUl4OgMeOpSV3QnZTnDPsKDmFfXQhKDPsKDmFfXQhKDPsKDmFfXYbjoNTlpd4G3eiO+pTboHN3gNOWl7qgseOpSVlQrxQD3uWlL2jceGpSFjRueekLugIIOmbh5Kdk5aUuaOx4atIV1Gv66DXlRWWTa/GIJ/H64g7FGo9rH7I8zrfZblK1lfFcS8jvY49tUNY3gvOtmRGX6nZRH8Y/6PexQ0FdH1VIvQ26CofqdlGX//rWfz+cobsVVBW8JDAQ1MLy6nZRV/8yCRrA0x0KehOq2VUgqAUPQYsbQa89P+kN3aOgbayWnVwgqAX3U3xzAvvW/6RdgNzQPQpaQFAy3DtJzYX/cViTEdT2GOyS8hxP8XHZoD5r4+m6yqSIqZzibY/BLiqv35/0KD8oG1RodTxd15kUMY1OkvUx2GXl8fOyZYNLnevj6bxWvL3cTNCJx2ADlJd6GzR2PDUJX4u3PQYboLzUBY0dT03Cgtoeg5XQpqxOXtDI8dQkLOgcSAFOC1KAuyJ/6tXUrWHGjMDt6Jug/pvvq09AVoJ4TuMjqD4VqZRCYwKlrI7EBhVEPGnXbwNWTdy/GCZldSQ268UjnlTrW3/RkiApqyOxoaCIJ8367TOI0+muSMtLvZMUO56ahDtJurFU+swfDUHHRI6nJmFB9cCcV7YBCGoiajw1SQsatbwMBPUHghIDQWmBoAbE/Yu+2YTYf/8b3Q+KeBKuf3z0zyaUfEA9QDxp15fjdlODygHKi8tG46CIJ936sQOaeht0I0HTbYNCUFogKPH6EJQWCEq8PlKA04IU4CHXj1Be6oKuAoISw/77Z1/BIeyrC0GJYV/BIeyrC0GJYV/BIeyrm4GgaINaQBuUGAhKCwQlBoLSAkF9QOIGWpC4gRYkbqAFiRtoyfs5bnryjicEvYFfBfOOZ5BTfM6JBgKQdTyD7CBtooHs26BhEjfk2walLs8nkv4phDkKasFY3UV7n7GgtkkB4gi6YjYAhoK6xnPZ3mcsqGlSgOaWxyiCrplPhaGgjvFcuPf5CmqdFACCOuMaTwg6g3VSgDjff1KneOd4spp9iqGg1kkBIkUuqU6SczwZ+clSUNukAIxCZ4ZhBbOOZ4LDTOuOH+y/8SF8x0GbGWrXbmZ9Tcy0F+hWl+cYyZVTonIVlCqebWgCC9pOx7p2OwR1MbKVoP7DWXp93xUDQxTPLjRhBW2/BAh6W8BKQ9MWtBea3AWlK8/rFJ+coBNwFZT/KX678tI8xU/gf4oPDfdO0qblJdhJmsC/kxQJCEoM+woOYV/dDATF/aAW+I6DaiAoMRCUFghKDASlBYLq7VLtyB4F9dp5CEpV3pJI0o2e7FDQWPeBe5GBoEu2uu76+2BTJFuJRkG68wGAoHKrEHTrikwBQdVmcYpnSgaCopNkAZ0kYvi25jV7FNQLCEpVHgS1AEGJgaC0QFBiCne+eayzgsgBWYn/fsYK69odJAlT0FKDLbwzFx1YsmdUywQOIwRNEQgas1QI6gwEjVkqBHUGgsYsFYI6A0FjlgpBnYGgMUuFoM5A0JilQlBnICgAcYCggDUQFLAGggLWQFDAGggKWANBAWsgKGANBAWsgaCANfEFPT0VxcOHmCHVMO3PiIWLOW1XTimol1u+/f3Q378JHKM0tUgd8tfAMYwvaKVmpTo+NjOoWVm4mMt2zy8inHq55dvfDYP9m8AxSlOLvF6ru7ewMYwv6FHMLC0nrTBNjnrDwsVctlsWv6o/18s5bH8vDPZvYhnHKE0sU8kT1mvYGEYX9PJVTqdy0rs/w8LFXLb7hw+xjF5u+fZ3w2D/JpZxjJJlufooGjaG0QU9//BdcfdGL6jDdtMWdLB/liUcomRZqnz4SEzQ06e36/nLO7mgDtuFoGSCivltExK0LArZmF5uhtvOL9xusoLq+MYTtKzPWSkJ2lDvDn0nafl2m4im2Uka7N/EEo5RmlpEzQ+eWCepEieFzx/kw0wO25XRTHeYabB/EzhGaWKJT29LN+ZP/CNofR4SP7zzy6LR3YWLOW1Xhl4vt3z7+6G/fxM4RsnMUeZeeg0bQ1zqBKyBoIA1EBSwBoIC1kBQwBoIClgDQQFrIChgDQQFrIGggDUQFLAGggLWQFDAGggKWANBAWsgKGANBAWsgaCANRAUsAaCAtZAUMAaCApYw1RQkXmyELmW1D/VU9dddoDyWbx99zZ4VycI1S+lTF0pPzz9eoM94IchppX+W6BiKoKmF69DV8kHi5+3DCZXQaV1IvmkSMhwOYhoqoyVgvOXd5GbslQPtjfv6gShVZNdR2QHPMp4H19HBWTIOKYi80Klw6djWjXCtnGtF9gymKwFFcknX0Q8RCRVxkqJ+LHrxCy9d1WCUP1Sfy7++/wh/hDRBYaYXq9tVqU6pjrfp/qziatYeMtgche0anNWqIyVApEKVARShGr4bveifvT6155OerA1GGJ6lfkTxYsO21XJ24u2+HzLYLIWtI5k//faqNhkT1cfNe/qBKH6RTab9G++PSzkjSmmpyd9Sm+iWLaftT5fNw0mV0GbBr1JUHEEOL886+RqrbY6Qah6Ee+Ig4Vq9euzf94YY9q0QfVL2R1cVVzbLuhWweQqaBOX/umoFVT01duklP3Mf/r0o1+qR50BFIIKjDFtYyWlLe/ebhYvm7R1WwWTu6CqTaSb9b1T/AJB62aVzgAKQQXGmDYhkx+WfXPV4k3kNgsmd0Hlj/pykL/vvqCXw+0pXicIbfKEyvEm/aNHG1QwjmkXK/Wj//R2u3gbuc2CyV5QOVg8HKiXIRoO1ItftU4Qql/UoUE1m9CLFxhi2sRKxbTJ99kO1HWR2y6YTAW1UzqeZDAOOs/imGIcdB7dS18MriTNszimuJK0ALdDaDOCB2wsjGnsYO5TUJANEBSwBoIC1kBQwBoIClgDQQFrIChgDQQFrIGggDUQFLAGgvJHPD3QPXydGRCUPeLWV3U/cY6GQlD2yKerhZv9ZweyAYKyRzwRXEFQwJbq7k3c8C5O9fkRW9DCnW8e66wgckCWcH4RFbszPWoRNzY+rNz36IK6r/KNvhYWOApqgX11MxA0LuwrOGSiuuPcf5eDSFMXHwg6LmJVGYwFNXWSzNU15P47PnwMHyuOBAQdlbCu3cNYUBOD6rY7Ps79t9mT1xkI6tYGXdsy37Gg3Y6Pc/9tNkQFQW8L2KOgooFYFIXDE+eGTnL/71Huv+rhd73syRGBoKMSdneKb3MgVuahJBvmI+g4919V95Aq560TAEHHReysk3T+sTtwXn4an4nVKKjgfqaTNGqDDjMCbpKiCoISw7ENepy+S6Qw/jUWdLMcahkIGpetKijyeU35Y7nIaRZ0nPtPZASrDEfg4EBQYjaqoEiN5JpySmAW1JD7T/TD0EniV54zG7RBxbmYWFA+ZCBo8m3Qy+H+3XaKr3tJ978/mO+oh6DEQFAT3RVJE8fXWt9X8x31EJQYCGrGoqhoAshmwIJr8fwMhaDEbPAVq7P7pKJSUNE8haARgKAj2v7RVCdp+Skegq6GXwRv2FDQyQUWd5IYhheCErPZKd4PCEoMvwjewL6CQyAoMWiDjpi7WcQKBCUGgo6hut1u/CcDICgxO7lhuQGC+qDm1DM+RAhBaYGgHhz1kcB0GyMEpQWCutM+QLj8MVlGsK/gEAjqDgSNCAT1oDm1Hw2Nfn4RvIF9BYdAUB9KdJJiAUGJWJHsLAdBxXPsP/vkVoCgHjR5qojaoBkIejk8Vw8fJcZB6dc3Idqgov0JQZdS9ytrQX3S00BQd1Qvvrp/h6BLUUdQU6dyjtvqsjOUraDXytioYhfAWzZrg3pd6YSgPuhhpnI2VQtH2FdwCAT14HLQhkLQ4EBQYtAGNSKSH5t+z7NAUGIgqAmV1otgmAmCrgWCmhhmonMBghIDQY3IfiWGmQKsH6G8HATFMFOo9bmX5wz7Cg6BoMSwC+At7Cs4BIISwy6At2xTwWoqB/0cENQI2VOIS8igDSpmhvMDghogfI57CTkI6j0PHAQdQ5kJYwkZCGpMXLcICEoMBDWhp0JCG5Rwfc+UbBCUFgg6Ac2sFAxhX8Eho+pyq/8WbVC6aVMYslEblOoUzy7AWxxB56ZNoS4vKlsNM4lHPibnk5sGghqxT5tCXF4GbdD6pFSfjijuZoKgGl9FIaiJy+H18vUNghKtPzNtCnV5GQgq7qivzKlYZoCgY2anTSEuLwdBvYGgY3w78L7lQVALENQA4bQp/IhfQdFDIruSxC7AGVzqjAv7Cg6BoMRwi9+Ind/NxC7AW7RBX+Z6m5hEwZUjWZMJgtY/93+236mMSRRcQRuUcv36fHR6sty/SJ2jPgNB/YGgY6SAlpvpIWhEIOgYLeDlMHVKIp5EIQdBcTcT4frzXU7aSRTigruZaNnLMNOKSRTigruZaNmLoFuV58ze72biFuEMBM2hDUp3NxMEbQbtJhv11s8h6Ijzb1asDEFNmEbgF34OQUfUP2jfp+IhqJnLwX4ysnwOQQ2cnrwVhaDEQFAjl4OnohCUGGbhG7NZBUsvRSEoMczCN2bDClYUV5K4RXhLQWnG7ZiBIygtGRxB0Qa1AEGJgaAG0IunXd82H7xjeUuuzacuKMZBqde3zQfvVt6iu0eSF/Q3K1aGoGOs88E7lbfs/qbUBV0FBB1jnQ/eqTyON+Axq84cENSAbT54t/L4+cnt+50DghqwzQfvWB47P7dog3o/FH+FoCYwywct4nZ6usQNEBTzJFFT2u+vtWKoLi9Dtxmox0xztFAeQSHo+vLcWp4ZCOoPBCVGlOfYd89BULL54s1vbcgOBeU4+tmxScXUuIgp0cUcEJQYCGpCtUGJbl/kFdodCspxeL4DR1Ba9igoOkkj0AalXP/8Ujz8/FQQ3QE+Sw6CegNBDRyf1fMJPpOcQ1BaIOgY0aKXrfpIzyRBUAsQdAwEZQQENdBktol0io8L+woOgaAGdGYbn1ERZtEzwL6CQyAoMbyiZ2CbCla4m4lyfXmncjV9qx3mSXLk/EI4tSQE1XfSn54mcthhniRXcLsd5fptNCtzI9Q4DU1zT+43wbV5re1j9+oeEAJ8+psS0/fHytAtBZ0YZpqfJ8ntYnwcZZo6bXSKJ2yDZi9om562nOjGz82T5Hg7UxRB2zqx+nbngaAGdOOznOwlzcyTxHFCGggaiG2GmWQ33avZ1J7imQm67Sme9G4mCLq6vOCC+mxcr7P/+0Eh6PryArdB1+i//zvqIag4H60cFgnai191gMYRlJaNbhaZm4iGsrwMBEUblHJ9NV+8TzT9ysvgFO8PBB1DIGjo5+JX9MBYfbvzQNAx6wXlN8jUEb9iInkYriQRrr9aUI7DoC1c6zUBBB0zN9vxbHkQlA4ISgzbm0UaMA5Kyy4FDd5JWsEG3+7pSZ+RMA5Kv36E8pIXlPiGZQgauTwIagGCEgNBjRwJn0niZWgGgsZlmyMo6TgoqyBDUGLYV3AIBCWGU+yMsK/gELugpyc5MiCGCdQIQTX5qEMoMhA0hzYo6d1M7Zvnl2f5vGg1uDmy8mhJ+ANBiUngftD2TTHyLwYIjv1Dpn+SCC8gKDEpXEm6EfTytT+INfUsbiAgKDH7P4J2F5LFwbIsXs8/fNdNCXg5RD2AQlBqdtIGbe7XGVe3/3bdO/r+8Hr69HY9f9FHZ5/D9BoyEDQu7Cs4xHoEFeiLVO21Ku8kO56wFJQ2u11c2FdwiLkN2ntXHzFbQY8xx5iuPAUlzm4Xlw1P8XSzpjRtUNGDf5TjSqfPH7qguE1QjoLOJw9zI4M2qO4kkaVUb96tVMO2VFdRxcHT/7YUTyAoMQkMM02/vQEMBZ3NbudIBoKqrgvdERSC2pnJbueIj6A7ey7e/zEvCEpMHEF3l1nEm6nqstmNDAT1KGTFY6Nsvtll+Ana3eXUtMJ6/1yLbEpfDvJkUL+s3Fqs72P6ykewwjzXpa3KQmjvZrK8L9F3OTU3O3XvUHB+kSMGj7JJfXxkKKi1QRXn+9/bKZ74bibL+xJ9E0lzs1P3jnPxY8riV3pb9TbrF4aCWruj6CSZIB9msu9HSEH/8CG21ZXAUlBLckYMM5mgP4Ja96O5y0m99N5xLt7EDgSlLS8DQenboDPneHmXU/PSe4cCCBqURHrxsztye5cT3VXQnQg6sbsQ1ARt4oa5TyS6wdtr91LdKXri30kS0Akal20qSJu44fYTNcjZPdF5/uHfn4o//dA3O12v7X1PJEjROQ8zKSCoAzOJG/zur20/6g1y6ic6/1g3eP/7sbnZSdzlVPk1gU1IQes9ulcvK7e2gzZoXBhW0PP+2vajdgypPpL+mbqA9Cf/0r4T+Bm6DATNoA1qxff2xduHO+vD2d+J4+b55fX0i/t39Q7ZBaTJWmy8foTykhd0Zt4pT0FHD3deT3//T6+qa31++Zs3+Q7Z+Px0NTZeP0J5yQs6N++U6f7a2Xsbuk+Lohn2/PS34rgpnvr4v0K9A0EJylskKNldKPEFnZ+Uwuv+2qKHKKQozv/4F3JT9RG7Lk2d4ukuIE1VY+P1I5S3RFC6+6Q4Cmpgwd1hzfFTchL/9x9/XXyvTC/v65d3lVZMXkBqptIt+usu+3NmIafdMuzFyvV5lEd4J186gvaWfBscT/tHVvVp8wPvWgXL/5xbyGm3DNVfuT6P8vIQtN9JWi5ovagY5BTLiss7hTx0/rHTMzRrQnNNRdB9n+LXzju1cMlCXS6qz+nqFH9VLVOXoyGOoCZS7yStwqm6+nJR3fAUucT0BaRCHrrRBvUvL/lhpllyTiUEQW9g+I1nnUoIgt7A7xunztQSl90J6s43j3VWEDkg89gFZc/Kvd/m+3AqNdjC/Fw0Y0slNKQwvSz7k569Dvs5l5q9oLZLnUMgKBEQNAwQlAgIGgYISgQEDQMEJQKChgGCEgFBwwBBiYCgYYCgAMQFggLWQFDAGggKWANBAWsgKGANBAWsgaCANRAUsAaCAtbEF1RkW3n4aKYim2PhYk7bvZkKzeNpdKaYk3gb3q0W3gDtW4/6q3glim18QSv1AIPOET3HwsVctnszFRpZ6uvNUTs24mi2pAr2wxQpyaq7N5rYxhf0KH+4Osv+3MILF3PZ7u1UaGSTB2yN2rER1Z8b909YFIhKnsheaWIbXdDLV5epzZYnsFy83dup0EInyIyG2rFbLj/9l1GSMmzqb5HGmSS20QU9//CdSLxCLqjDdhMV1NwGLZ+NR7EL0axdU9T+71TQ06e36/nLO7mgDtvNSdDzj8bjauh2TXn/TpS+Oaqgpc7FvtwMt51cuN2cBD2+ml0MO3VCKZKT7VDQhrra9J2k5dsdToWWTCfJJKhO7Tg+nR+DjTFd1fHT9bubIrqgYnTj9PmDfJjJYbvDqdDSGWZaPg4atgkqWluCnQ4zlUUzB9mSgbiFizlt92YqtAwH6sM2a476qE0SW1zqBKyBoIA1EBSwBoIC1kBQwBoIClgDQQFrIChgDQQFrIGggDUQFLAGggLWQFDAGggKWANBAWsgKGANBAWsgaCANRAUsAaCAtZAUMAaCApYw1RQkWGyELmW1D/V09Xd87Pls3j77m3wrk4Qql9Kma5Afnj69QZ7wAQVyOL+fUkKBXOSnCe1gZu3Qyd3auAqqAyVSDIpEjJcDsLQLv3l+cu7yB5Yqgfbm3d1gtCqya4jsgAeZRSPcWLJEafUHpYsTsfbZHgQ9CqDoNJYilwVvfSX4gCq09f03tXZXNRL/bn477MMaxU21SBnqAQdfQRBrzIIXR7gLv2lSAUq4iO8G77bvagjqD50ppMezJmuASQypj0Vf3VoMn6cfvmvRSFzM4owF6IdpX7V6sffZgXpBG0WEuupLyBcFvEW1oLWdvYPfk2wmxzz6qPmXZ0gVL/INqg+gEb7tTNEt0GlfLJZVLyKaIj0nU/PdYB/X/9x+vw/Kml3J6heRm5BneIfm8zeaj2xRHUX4XfPVdCmk2QSVBxVzy/POolaq61OEKpexDvqyCDcDJrLjTX9I6iIZZf5WASq/mf5KFpM1yZ3pRa0lzpRfRU6gN16l8NvP8U4L3EVtIlrP9V/K6joq7cR7LeOdEz1S/WoM4BCUPmPUuWOl8bJw6VU8fP/1o0i8V7/CKqXabZwepI9gafeepfDw+9ipAXkLqjqJOmuUu8Uv0DQujWqM4BC0Nsj6LWL4n/+2+cPedq5PYL2tyDO5t1CuhEQpWnPXVCZrLf+tX5ch4JeDreneJ0gtMkTKsebdDxzboP2BO21QXvdIdHTEUE7yoOjHr7Ty3RbOD58dAs1rdQYoyPsBdV9x/6b0rfhQL04ROoEofpFHUZVGzTnXrzqJBWvuhf/l3Uo6h66nm5Cnoe+iF9wUXx/kMvU4fuHL+96GbkFGfXzy2NvIS2oGp8OC1NB7ZSOZ+yMx0Fv2d1vdZeC6l76YjK+ktRHNCLDzS8XiF0K6ngIbYZDs6dseuY74v8BBSVTHb2NPVQAAAAASUVORK5CYII=" /><!-- --></p>
+<p>visualize first principal component</p>
+<pre class="r"><code>mktrj(pc.xray,pc=1,file=&quot;pc_1.pdb&quot;)</code></pre>
+</div>
 
 
 
