@@ -142,6 +142,171 @@ percent</code></pre>
 ##         89.51673340          8.71321614          1.51239392 
 ##               Other        Multi Method 
 ##          0.16986775          0.08778879</code></pre>
+<p>when uploading to github and if you want it to include the rmd in a way where it looks prettier, click the gear icon then go to output options, keep markdown source file. ok. now knit again this will make the .md intermediate folder and then you can go in ahead and commit and push onto git.</p>
+</div>
+<div id="using-bio3d" class="section level2">
+<h2>Using Bio3d</h2>
+<pre class="r"><code>library(bio3d)</code></pre>
+<p>Read in our HIV-Pr structure</p>
+<pre class="r"><code>pdb &lt;- read.pdb(&quot;1hsg&quot;)</code></pre>
+<pre><code>##   Note: Accessing on-line PDB file</code></pre>
+<pre class="r"><code>pdb</code></pre>
+<pre><code>## 
+##  Call:  read.pdb(file = &quot;1hsg&quot;)
+## 
+##    Total Models#: 1
+##      Total Atoms#: 1686,  XYZs#: 5058  Chains#: 2  (values: A B)
+## 
+##      Protein Atoms#: 1514  (residues/Calpha atoms#: 198)
+##      Nucleic acid Atoms#: 0  (residues/phosphate atoms#: 0)
+## 
+##      Non-protein/nucleic Atoms#: 172  (residues: 128)
+##      Non-protein/nucleic resid values: [ HOH (127), MK1 (1) ]
+## 
+##    Protein sequence:
+##       PQITLWQRPLVTIKIGGQLKEALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYD
+##       QILIEICGHKAIGTVLVGPTPVNIIGRNLLTQIGCTLNFPQITLWQRPLVTIKIGGQLKE
+##       ALLDTGADDTVLEEMSLPGRWKPKMIGGIGGFIKVRQYDQILIEICGHKAIGTVLVGPTP
+##       VNIIGRNLLTQIGCTLNF
+## 
+## + attr: atom, xyz, seqres, helix, sheet,
+##         calpha, remark, call</code></pre>
+<p>Q6. How many amino acid residues are there in this pdb object and what are the two nonprotein residues? 198</p>
+<p>Note that the attributes (+ attr:) of this object are listed on the last couple of lines. To find the attributes of any such object you can use</p>
+<pre class="r"><code>attributes(pdb)</code></pre>
+<pre><code>## $names
+## [1] &quot;atom&quot;   &quot;xyz&quot;    &quot;seqres&quot; &quot;helix&quot;  &quot;sheet&quot;  &quot;calpha&quot; &quot;remark&quot; &quot;call&quot;  
+## 
+## $class
+## [1] &quot;pdb&quot; &quot;sse&quot;</code></pre>
+<p>Print a subset of $atom data for the first two atoms</p>
+<pre class="r"><code>head(pdb$atom)</code></pre>
+<pre><code>##   type eleno elety  alt resid chain resno insert      x      y     z o
+## 1 ATOM     1     N &lt;NA&gt;   PRO     A     1   &lt;NA&gt; 29.361 39.686 5.862 1
+## 2 ATOM     2    CA &lt;NA&gt;   PRO     A     1   &lt;NA&gt; 30.307 38.663 5.319 1
+## 3 ATOM     3     C &lt;NA&gt;   PRO     A     1   &lt;NA&gt; 29.760 38.071 4.022 1
+## 4 ATOM     4     O &lt;NA&gt;   PRO     A     1   &lt;NA&gt; 28.600 38.302 3.676 1
+## 5 ATOM     5    CB &lt;NA&gt;   PRO     A     1   &lt;NA&gt; 30.508 37.541 6.342 1
+## 6 ATOM     6    CG &lt;NA&gt;   PRO     A     1   &lt;NA&gt; 29.296 37.591 7.162 1
+##       b segid elesy charge
+## 1 38.10  &lt;NA&gt;     N   &lt;NA&gt;
+## 2 40.62  &lt;NA&gt;     C   &lt;NA&gt;
+## 3 42.64  &lt;NA&gt;     C   &lt;NA&gt;
+## 4 43.40  &lt;NA&gt;     O   &lt;NA&gt;
+## 5 37.87  &lt;NA&gt;     C   &lt;NA&gt;
+## 6 38.40  &lt;NA&gt;     C   &lt;NA&gt;</code></pre>
+<p>Note that individual $atom records can also be accessed like this</p>
+<pre class="r"><code>pdb$atom[1:2, c(&quot;eleno&quot;,&quot;elety&quot;, &quot;x&quot;,&quot;y&quot;,&quot;z&quot;)]</code></pre>
+<pre><code>##   eleno elety      x      y     z
+## 1     1     N 29.361 39.686 5.862
+## 2     2    CA 30.307 38.663 5.319</code></pre>
+<p>Which allows us to do the following J</p>
+<pre class="r"><code>plot.bio3d(pdb$atom$b[pdb$calpha], sse=pdb, typ=&quot;l&quot;, ylab=&quot;B-factor&quot;)</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAAAWlBMVEUAAAAAADoAAGYAOjoAOpAAZrY6AAA6ADo6AGY6Ojo6OpA6kNtmAABmADpmtrZmtv+QOgCQkGaQ2/+2ZgC2///MzMzbkDrb2//b////tmb/25D//7b//9v///9SJ0IxAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAWHElEQVR4nO2di3bbOJJAkd7YPbv2TLJRRhPZ1v//5ohPUSIBFt5F8t5zuiOLYKEEXoEAJRHmCqAYUzsBABcICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUk1hQAyCilqA+hf89wf1kaFRLXNsW+zN5yN8A9i2LVTqeSUwmQb9+dvr/9TtFOARF0HQFG87mrXtwGR5EhUNQBE1X8Nr0n6OW5+9/osMhKIImLHjj8/3H8PBiOckjaGiq7iejo8627FFQetDEIGjCgg1n03ehjEGTgKAJC7Z8vnezeEv/iaDhqbqfjI4627JPQdOGQ1AETVfQHcX7A4IGBEXQdAVbTrfJ+8erMd9+JQmXdm/YEHkEbf38+9fDBaeIcPO9MfQoZLoOepu7n16ah0kuM833ri5o9QSOQrYL9f210CQX6hf2ri1I7foPQ6ZT/K33POfrQU1sgHgQtBB5BP18/+t324VebLOkzQuKoWXIdZnp0l1MekkUbr4zgh6DTVyoX9oZQY8BggamgKBlQNDQDDC0CAgamgGCFgFBQzNA0CJsUVATGyAeBC0FggangKElQNDgFBC0BAganAKClmCzgtb1A0FLgaDBKSBoCRA0OAUELQGCBqeAoCVA0OAUELQECBqcAoKWAEGDU0DQEiBocAYIWoINCmqiI0RT/y1yGBA0PAUELQCChqeAoAVA0PAUELQACBqeAoIWAEHDU0DQAiDoJjM4Dgi6yQyOA4IGJ4CgJUDQ4AQQtAQIGlo/ghYBQUPrR9AiIGho/QhaBAQNrR9Bi5BJ0LTLcS/vWssPBC1JHkETL8e9vGslP8zCI8hGFkFTLya7vGd1QTG0AFkETb0c9/KeCHoE6EGD60fQEuQagyZdjnt5TwQ9Aplm8WmX417eE0GPwPaugyLooSgsaNhy3MuJIOgRyDSLb0aelzwX6hH0UOQTtJ2/Z1iOu7KgxvIY8pBN0F7N3V1mQtCyZBP047UVdHcX6hG0LPSgodVXy+BYZBJ0WOm4my5FhrPsWV9QDM1PrstMN0e//bJ/kJRC0Dp6IGhZNnyhHkGPwCEFjXktCFqWzQma4jo5gm4HBI3ZF0Gzg6AxuyJodo4oaMQ3VRC0NAgaXH1EBiBmy4KGBkknKIZmB0HDqw/PAMQgaHj14RmAGAQNrz48AxBzQEFNms+xIjIAOQgaXn1wBiAHQcOrD84A5BxMUHNF0G2xaUH9o8QK+rwjguZma4JGfpJjTFpBD2xooVd+PEFNRO0IegdBBfsFnOINgqYBQQX7IWg9EFSwX8gkCUHTgKCC/YJm8RG1I+idmA+MfapJXjBvuMjrkAiaDASV7OcZxjz9G1t96mbZkO6mULIIGlM9ghaoJ3XBvOEQVAkIKtoPQWuBoKL9Cgs63w9Bs9eTumDecAiqBASV7eYXx8weRFafuF0KXbpJgSn0dkLQqOrTtkupXikFGxc013LcCKqFbQuabTluBNXCpgUNX0x2rRYE1cKmBQ1ejnt1koCgWti0oME9KIImjGarI1mc7Qoauhz3+gGKvBCJoAjaEbocd1VB10Mh6EOYEoYquw6KoLlBUHeUteW4V6pJJejibquhgnbyQHrajKkTQSf063X6hMsqqFl8eH/Ov//enKCpPkzdtqDDCNTxWRKCLsdC0KWKkhZs6CfvyXvQyDGgsTwentqMoOGVImjH53szf9+WoCEXuZIeJCMNh6AxBXtO334hqB9FBE012x3/l5l8k6SzedMs6HzH9RNs4MUpKZsTtIShGWfxH6//g6A+IKi1opQF73z9NAjqgVRQ6VxqeV8EjQqHoKJyCBpeMC5cOUFne6oQVBIOQaMKxoWrK6h/9RsTNMbt50DXQwrqrqeuoMsbqwgaWmsqQc3DPzk5kqDG+efKcbce2iMLWsDQAwu61KHa00LQ5xSm/+YDQR/+sg+NEfQ5hem/+diUoJGTFARF0Ph66wpqlzC/oOKJsVTk5V0VC7oUDUEf/7JLaLuCiKDJOLigs4JiQXsjdi+o/3s9qRWJD28cGgR9fGb/groGKtK6n0pqFHRyV4bUyTg32LYhqLwC9/RK/jGomT1IQGTzjgUn97VJno1rg21bfkGHLZaaUh0kIw0nNvl5t5VV9nYiqPV2SwmycW8pIehSOGWCikWe7Wecfe9w+pe+Q8KykAQVPO0oOP5kM8pTdYI6RlW9oI4Dm4T8groF7LtXwbehdQuahg0JOghxDEHd06hZ1Qi6usl73LT81KqgzgObgsyCro4bO3sFgi41WzwJBf14vZ3gv/3KkY47IwT1Kbe824oJ7mnUPIBGQbu7MpztvzeKSMedUWpBl85VBxdUElq5oMN1UNutaaPScWcUKqh16LV0UGbllArqW+9hBB2ug8ZdbQoRdHnL+iuwX13xEtQvLW/E3oUJahYeWQpsXNB6PWiwoFfbyB9BF591RzbWP6LYwRg0UFBzRdBDCZp5Fm/fhKB+BZd2su5XW9DoEX66t8pauMSC9gPQYEHFwkSiSFB3aO2Cfv6z6ztzTZLsDRgj6OoJxHoK3IWg61LtT9BzdkEfW8J2X3vZGXhNUHsPU1pQ8ZAiqaDG8Vd4UQ9SCXq639w76muh/oJG9aAHF3TdKbl1vs0jJH0PGodA0Ice014+ag6zZUE9KtYr6OqLyTRJilmO+95DrI7sJYllFzSRoVLvrINl0T62/XYl6On7H/sahy1Ry3HPBDXO8gjqEdu637yE0BiFgp7aj5A+31+sZcOX455uKiHo4oDOPDxxCEEXrCsiqMkgqOCz+ODluKebzH1+YxB0qbZQQQXdpb3FF0pGkEPQ8bN4u6BxPejo5ahKBUHXW06egQwEFdVnDzU+6j6F/3h1DEIDl+Oebnv4n+t3MuLj6dxcXVCxd+kFXbDRXNc/e/NNYjFcDkEln8WHLsc9bnvsRSsIurglqAoZOQV19nqLJ6higq42c/CLjMRPUMGQNXDzZMT7VH8SQUM6OfkLkkZfFvT+yufv/8MKuroc91DoXuuaoMJB5sp2e6dSXFD5Cyov6Py5KC8EzRwg6HD6Xv0s/uIYCAjrXTj7eIZC0HVBl/pFqaBRhuYR9PT9z/nFtQ7ntf3I/u3j//7Y75MjbtvYIaBMUPP0XCJBPZaEW/du/lYKFbSTcumV3wsUFtQaxV/Qz/e36+U2+XH95KO5ln9qe8+Qy0yeBfMKKki0qKDPg2XP2PcnjHPwZDl1bUPQH9ePf/xu/7PQ9psffzeCBlyo9yVO0MXDZO7/Ieg0yBYEba7CN99ocgraXP38+s81QQ/qkVlYRTZB+9aLEzToTGE565YWdHZaWS6tTtD2I6TTm/MUP37K1KkaU69PZkEVOQUVGeZq3BCH7MNCUUF38Elmcwkfd8ku6KSSlIJeTy/NTN45iT930/eL9aefugXtN1ivBgqrCBR0eafEgpolCV052UorFDQFGxFUNop0dENZBZVGX+r3vAW1vRpdgt6mP9m/UZ82VEVB1wSwhiggqH8PuhVB3/YmqPU4rd3SfbUOD0EXhnvL6SQT9FpfUDP7f0z4vuD5/mFlrl91pg0lEtRhRLig1q55NYK4x5NFDx0jb1LQAj+aSxsqXFD5VcxIQWcJlBNU3HbG2k7BR3J6crcH8Re0IX4pmk0IGpXBSs8wKSgVVGayML1uQwJBgw8lggorqi7ovKte2AtBZeE6diaoYxLhlYGZPyd7f4gFNRUFtRVH0KhQEYJ6ZzDRx8weuHaWCjp7XpS5TkGn72pHiB0I6owlO8WmSWAaSCyo8JjHdPK6BbUPsfyipzQqcbhIQX2+c+SsZNLSC6Y6d119trKgxlFcmaDn5gJocwuxuBU7VQmaKAMzVVUYvICg4Uf/WVBpsiKmwRMK2n6Vqfmxpvsb9dJwaYh8fQkFvZrnL1UEjZDFY828gj4NVLIJGtvDTAq2g8/uJ/G5FlFIG6ygoPepknne5Fu1fDIU95OYioJK28hT0Pa78t2XPLPdYTlptMRDZ1cty+NOx0G1n9qen486gskEFY9HJEj3QtBk9fscvr5HckxfBEHWt0m2i/ZF0Dg2KajcOueLQNBpQQS11uIzz15d9XpLgoa1PoLmqMdVSw5BH//xqMBju2jfwAwcU7hsgur7PqgzWhlBXb4tPb/6Y6d0gkY1QKSgnq1SqGCNcAgaunkFSQL2F+97YilTsEY4BYJKJ+RjcYF1ZiOCupawQlBntEJ+egraHrgdCUoPGhxNsaAr8aZRJWXDtq4hEtRWwNh3lWe1D0Hjx+LR9SPo8pMI6gynV9C1eNfJqXN3gnokhaCJ6j+2oJapoG1XBJW3bK4EXFsEWfWjAMdZUhYtsgFiBHW8uRBU1PVkTcCxRZKVEkHF7eglqE9SCJopAceWQwkaeAbxL7stQd13Z82Aoybb8GMt3jjX36agZnWLRwIpC7bELMcdQnVBHTwlIfuJ3uYFNdYtGgSNWo47hO0IKkxp+PhwtFQa32ejLA9RFA9B/VLKImjkYrIBbELQkJRqCyrKYKGEsW7RIGjcctwhPJ9Gw2zIA4K6i/oFji94VdCDGmm7luAuqPFPqb6gV1HW8wNgzUCBoJHLcQew0D4BNuThPp3dqqCCIHJBA04haQu2RC3HHQCChmyUpiAWdGlmpFPQyuEQVLRRmoIkSDfANvNatyWoaDnukLjzvxQKKjzWzztHCJqkBcQrnYxNrl/Q83B3sXONWXwvqA4/pwctICfB+8yxvbigY+dgTUGFoM1Cc5/vL9digj7G641QKKh/SjsR1Dz9La88ecHrcJnp62ezaHdFQRNXEcwknf0LOkvYPn2SVZ684PV+of70/Q+Cbl9Q2SRp8vsU9YKOF+pPLwUFDT6L5CZQzXFnX0GNfVNwDpJS2xF0PLHbF0VOL+jSCgY62LygXlgENQ9/eoVLXLBl+Cjp6yeCiiRz7Ly6qy5BZ5cquvenMkFLh7sPgXIEjwVBEfThixjaBI264iUW9O5A3YZ4TvhBUO+MdiPoJKY6P6NSkgp677gqC/pca3doji7oNKZCQSNA0MQFq4R7iHlIQe9DnMkYUEVLIOhzTBWHJR1iQWddqY6WQNDnmCoOSzrCBdXREH1mZvzDe++0BauEewiq47gkw19QXQ2BoM9BdRyXZIgEHSXVLah/Rgi6fRA0LHTJcA9BdRyXghjVgvYJIai241IOBA0KXTLcQ1Alx6UcjxdxwickmUDQp6haDkwxZoKG2pAHBH2KquXAFGNZUE2/yRpzCtk5ccEq4R6iajkwxXj8Llsnpxo9EXQWVc+hKcSCoPWSWWC8k2RAWvsSVOHBKYGZPlD48hH0IazCI5SZbQh6DRp27EzQwLfpbtD58oN/7+GzC4JuAZ0vP+oXL8kLVgk3DazwCBVDp6AxOSHorjA6Xz6CTiNrPELlUPnyEbRQaCjODgWFPYGgoBoEBdUgKKgGQUE1CAqqySRo6eW4Ya/kEbT4ctywV7IIWn4xWdgrWQQtvxw37BV6UFBNrjFo4eW4Ya9kmsWXXo4b9grXQUE1hQXNtRw37BV6UFANgoJqMl0HvZ/KuQ4KMeTpQa1LdIaFg+OS7csiLynDwWHJNQa9mB/O7QgKIpgkgWoQFFSDoKAaBAXVICioBkFBNQgKqkFQUA2CgmoQFFSDoKAaBAXVICioBkFBNQgKqkFQUA2CgmoQFFSDoKAaBAXVICioBkFBNQgKqkFQUA2CgmoQFFSDoKAaBAXVICioBkFBNQgKqkFQUA2CgmoQFFSDoKAaBAXVICioJtsyNM5lvBAUhOQR9DwsE8968RBHFkG/fo5ani0rxiMoiMgi6Of7uIrX5fEkz3Lc4Ac9KKgm1xi070LTjEH/PcH9ZGhUS1zbFvszecjfAPYti1U6nklMpln8sCC3pf9E0PBU3U9GR51t2aegacMhKIKmK5ghHIIiaLqCGcIhKIKmK5ghHIIiaLqCGcIhKIKmK5ghHIIiaLqCGcIhKIKmK5ghHIIiaLqCwnAAIioJWq0OvdWTQVQGCEoGqjNAUDJQnQGCkoHqDBCUDFRngKBkoDoDBCUD1RkgKBmozgBByUB1BvUzB3CAoKAaBAXVICioBkFBNQgKqkFQUA2CgmoQFFSDoKAaBAXVICioBkFBNQUE/fiHbU2QvHQ3M325NvfbNd9+Fa+/f91j5eWz6DKo1g7tmjDtnY4j2iC/oJ/v1kVr8vLxd98Ul1ubXIob2r/usfLyWfQZ1GqHr5+3us7NOyOmDbILenGsqpS55r7e7tb6p5fCtXeve6y8fBZDy9dqh4/X5obx579+R7VBbkEv5u1SSdBz3xBjQ5WsfHjdY+XFsxhbvmo7NB1mVBsUGIPWEvT0v90QqDvFlc+iE3SovEYWXW112+E0eekhGexX0M/3ZqmH01s/6Ck/CG1f91h5jSzaDOq2Q7MeTFQb7FfQsfKDCzo+rJLBMEdCUAu3Yc/RT/EtddqhW0+LU7yDW5vUmRwMglabJF0fBa3RDv3iw0ySFula4zK5ylGYS+XLTA9vkRrtMCxMqPoy07XiLL5piNvkoNKF+v51V7xQP8ziK7XDx+uwXqbqC/UVT/EnY7r38LnKR5396x4rL59Fn0Gldjh3t1JuaoxoA74sAqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEBRUg6CgGgQF1SAoqAZBQTUICqpBUFANgoJqEDQJ7Yorw6IrT3y+/+gfVbiD2eZB0CR8/WzvKXgxP1ylENQfBE1CL2j/jw0E9QdBkzCYeWoWLDj35/qP1/a+h90pvrnx4P9/+9X+0f7vbBkRwAMImoRpD3q+9ZPNzVvbWxvfTvqtjqe/ft8eTwQdSoEbBE1CL+i57TAb65pVNfob9zY6dvfhPt0FHUvVy3kbIGgShln8j2GgeTNyWKS0cXK8Hfgg6FiqatobAEGT0PagH6/9ksK9q6213Rj0PBN0LAVOEDQJ3Sm+XRbocaren9UtPSisgqBJ6MegNx0n1+Ub2uHmMAY9N4K+9ed/+k4RCJqEXtB2Xcxmft6oOiy80l1UahZguc3iv35+/3M79f8YS9XOXDsImoThOmi7tlpzhbNdp7NbhOXhOujtL2P+NVwHZRK/CoKCahAUVIOgoBoEBdUgKKgGQUE1CAqqQVBQDYKCahAUVIOgoBoEBdUgKKgGQUE1CAqqQVBQDYKCahAUVIOgoBoEBdUgKKgGQUE1CAqqQVBQzX8B8KTDPVulgWIAAAAASUVORK5CYII=" /><!-- --></p>
+<p>Q7. What type of R object is pdb$atom? HINT: You can always use the str() function to get a useful summery of any R object.</p>
+<pre class="r"><code>str(pdb$atom)</code></pre>
+<pre><code>## 'data.frame':    1686 obs. of  16 variables:
+##  $ type  : chr  &quot;ATOM&quot; &quot;ATOM&quot; &quot;ATOM&quot; &quot;ATOM&quot; ...
+##  $ eleno : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ elety : chr  &quot;N&quot; &quot;CA&quot; &quot;C&quot; &quot;O&quot; ...
+##  $ alt   : chr  NA NA NA NA ...
+##  $ resid : chr  &quot;PRO&quot; &quot;PRO&quot; &quot;PRO&quot; &quot;PRO&quot; ...
+##  $ chain : chr  &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; ...
+##  $ resno : int  1 1 1 1 1 1 1 2 2 2 ...
+##  $ insert: chr  NA NA NA NA ...
+##  $ x     : num  29.4 30.3 29.8 28.6 30.5 ...
+##  $ y     : num  39.7 38.7 38.1 38.3 37.5 ...
+##  $ z     : num  5.86 5.32 4.02 3.68 6.34 ...
+##  $ o     : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ b     : num  38.1 40.6 42.6 43.4 37.9 ...
+##  $ segid : chr  NA NA NA NA ...
+##  $ elesy : chr  &quot;N&quot; &quot;C&quot; &quot;C&quot; &quot;O&quot; ...
+##  $ charge: chr  NA NA NA NA ...</code></pre>
+<p>It is a data frame</p>
+<p>Print a summary of the coordinate data in $xyz</p>
+<pre class="r"><code>pdb$xyz</code></pre>
+<pre><code>## 
+##    Total Frames#: 1
+##    Total XYZs#:   5058,  (Atoms#:  1686)
+## 
+##     [1]  29.361  39.686  5.862  &lt;...&gt;  30.112  17.912  -4.791  [5058] 
+## 
+## + attr: Matrix DIM = 1 x 5058</code></pre>
+<p>Examine row and column dimensions</p>
+<pre class="r"><code>dim(pdb$xyz)</code></pre>
+<pre><code>## [1]    1 5058</code></pre>
+<p>Print coordinatesfor the first two atoms</p>
+<pre class="r"><code>pdb$xyz[1,atom2xyz(1:2)]</code></pre>
+<pre><code>## [1] 29.361 39.686  5.862 30.307 38.663  5.319</code></pre>
+<p>The Bio3D atom.select() function is arguably one of the most challenging for newcomers to master. It is however central to PDB structure manipulation and analysis. At its most basic, this function operates on PDB structure objects (as created by read.pdb()) and returns the numeric indices of a selected atom subset. These indices can then be used to access the $atom and $xyz attributes of PDB structure related objects. For example to select the indices for all C-alpha atoms we can use the following command:</p>
+<p>Select all c alpha atoms returnin their indices</p>
+<pre class="r"><code>ca.inds &lt;- atom.select(pdb,&quot;calpha&quot;)
+ca.inds </code></pre>
+<pre><code>## 
+##  Call:  atom.select.pdb(pdb = pdb, string = &quot;calpha&quot;)
+## 
+##    Atom Indices#: 198  ($atom)
+##    XYZ  Indices#: 594  ($xyz)
+## 
+## + attr: atom, xyz, call</code></pre>
+<p>Print details of first few atoms</p>
+<pre class="r"><code>head(pdb$atom[ca.inds$atom, ])</code></pre>
+<pre><code>##    type eleno elety  alt resid chain resno insert      x      y     z o
+## 2  ATOM     2    CA &lt;NA&gt;   PRO     A     1   &lt;NA&gt; 30.307 38.663 5.319 1
+## 9  ATOM     9    CA &lt;NA&gt;   GLN     A     2   &lt;NA&gt; 30.158 36.492 2.199 1
+## 18 ATOM    18    CA &lt;NA&gt;   ILE     A     3   &lt;NA&gt; 29.123 33.098 3.397 1
+## 26 ATOM    26    CA &lt;NA&gt;   THR     A     4   &lt;NA&gt; 29.774 30.143 1.062 1
+## 33 ATOM    33    CA &lt;NA&gt;   LEU     A     5   &lt;NA&gt; 27.644 27.003 1.144 1
+## 41 ATOM    41    CA &lt;NA&gt;   TRP     A     6   &lt;NA&gt; 30.177 24.150 1.279 1
+##        b segid elesy charge
+## 2  40.62  &lt;NA&gt;     C   &lt;NA&gt;
+## 9  41.30  &lt;NA&gt;     C   &lt;NA&gt;
+## 18 34.13  &lt;NA&gt;     C   &lt;NA&gt;
+## 26 30.14  &lt;NA&gt;     C   &lt;NA&gt;
+## 33 30.12  &lt;NA&gt;     C   &lt;NA&gt;
+## 41 30.82  &lt;NA&gt;     C   &lt;NA&gt;</code></pre>
+<p>and the xyz coordinates</p>
+<pre class="r"><code>head(pdb$xyz[,ca.inds$xyz])</code></pre>
+<pre><code>## [1] 30.307 38.663  5.319 30.158 36.492  2.199</code></pre>
+<p>In addition to the common selection strings (such as ‘calpha’ ‘cbeta’ ‘backbone’ ‘protein’ ‘notprotein’ ‘ligand’ ‘water’ ‘notwater’ ‘h’ and ‘noh’) various individual atom properties can be used for selection</p>
+<p>select chain a</p>
+<pre class="r"><code>a.inds &lt;- atom.select(pdb,chain = &quot;A&quot;)</code></pre>
+<p>select c alphas of chain a</p>
+<pre class="r"><code>ca.inds &lt;- atom.select(pdb,&quot;calpha&quot;, chain = &quot;A&quot;)</code></pre>
+<p>combine multiple criteria and return where they intersect</p>
+<pre class="r"><code>cab.inds &lt;- atom.select(pdb, elety = c(&quot;CA&quot;,&quot;CB&quot;), chain = &quot;A&quot;, resno = 10:20)</code></pre>
+<p>Q8. Use the Bio3D write.pdb() function to write out a new C-alpha atom only PDB file for viewing in VMD.</p>
+<pre class="r"><code>inds.ligand &lt;- atom.select(pdb,&quot;ligand&quot;)
+inds.protein &lt;- atom.select(pdb,&quot;protein&quot;)
+inds.protein</code></pre>
+<pre><code>## 
+##  Call:  atom.select.pdb(pdb = pdb, string = &quot;protein&quot;)
+## 
+##    Atom Indices#: 1514  ($atom)
+##    XYZ  Indices#: 4542  ($xyz)
+## 
+## + attr: atom, xyz, call</code></pre>
+<p>check we have what we want</p>
+<pre class="r"><code>#pdb$atom[inds.ligand$atom]</code></pre>
+<pre class="r"><code>#head(pdb$atom[inds.protein$atom])</code></pre>
+<pre class="r"><code>#pdb.protein &lt;- trim.pdb(pbd, inds = inds.protein)
+pdb.ligand &lt;- trim.pdb(pdb, inds = inds.ligand)
+pdb.ligand</code></pre>
+<pre><code>## 
+##  Call:  trim.pdb(pdb = pdb, inds = inds.ligand)
+## 
+##    Total Models#: 1
+##      Total Atoms#: 45,  XYZs#: 135  Chains#: 1  (values: B)
+## 
+##      Protein Atoms#: 0  (residues/Calpha atoms#: 0)
+##      Nucleic acid Atoms#: 0  (residues/phosphate atoms#: 0)
+## 
+##      Non-protein/nucleic Atoms#: 45  (residues: 1)
+##      Non-protein/nucleic resid values: [ MK1 (1) ]
+## 
+## + attr: atom, helix, sheet, seqres, xyz,
+##         calpha, call</code></pre>
+<pre class="r"><code>write.pdb(pdb.ligand,file=&quot;1hsvligand.pdb&quot;)</code></pre>
 </div>
 
 
