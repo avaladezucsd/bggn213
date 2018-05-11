@@ -55,6 +55,9 @@ couldn't get Auto dock tools to work on pc , went to a mac with it already downl
 
 Normally the strucutre has H atoms on it but visualizing in adt we dont really see them there, so we need to add them in 
 
+ok so now we have the pdbqt file that has the h atoms and positions and stuff about them. 
+
+
 
 
 
