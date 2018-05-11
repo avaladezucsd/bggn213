@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Section1
@@ -50,6 +50,10 @@ write.pdb(ligand,"1hsg_ligand.pdb")
 ```
 
 cool that sends it over into your folder 
+
+couldn't get Auto dock tools to work on pc , went to a mac with it already downloaded adn opened it from there.
+
+Normally the strucutre has H atoms on it but visualizing in adt we dont really see them there, so we need to add them in 
 
 
 
