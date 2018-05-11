@@ -1,0 +1,56 @@
+---
+title: "Lecture12"
+author: "Andrew Valadez"
+date: "May 11, 2018"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Section1
+
+Get the protien first 
+```{r}
+library(bio3d)
+file <- get.pdb("1hsg")
+```
+
+Read the structure and trim out the protein and small molecule ligand from everything else 
+
+```{r}
+hiv <- read.pdb(file)
+hiv
+```
+
+2 non protein resid values in this structure are HOH and MK1 (water and ligand )
+
+lets get the ligand first
+```{r}
+ligand <- trim.pdb(hiv, "ligand")
+ligand
+```
+
+
+now lets get the protein
+```{r}
+prot <- trim.pdb(hiv,"protein")
+prot
+
+```
+
+
+now lets write those to a file
+```{r}
+write.pdb(prot, file="1hsg-protein.pdb")
+write.pdb(ligand,"1hsg_ligand.pdb")
+```
+
+cool that sends it over into your folder 
+
+
+
+
