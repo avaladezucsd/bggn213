@@ -200,6 +200,28 @@ prot</code></pre>
 <pre class="r"><code>write.pdb(prot, file=&quot;1hsg-protein.pdb&quot;)
 write.pdb(ligand,&quot;1hsg_ligand.pdb&quot;)</code></pre>
 <p>cool that sends it over into your folder</p>
+<p>couldn’t get Auto dock tools to work on pc , went to a mac with it already downloaded adn opened it from there.</p>
+<p>Normally the strucutre has H atoms on it but visualizing in adt we dont really see them there, so we need to add them in</p>
+<p>ok so now we have the pdbqt file that has the h atoms and positions and stuff about them.</p>
+<p>ok we made a config.txt file that will basically lock in where the potential binding for the protein will be.</p>
+</div>
+<div id="section2-docking-ligands-into-hiv-1-protease" class="section level1">
+<h1>Section2 Docking ligands into HIV-1 protease</h1>
+<p>Process docking result for viewing in VMD</p>
+<pre class="r"><code>library(bio3d)
+res &lt;- read.pdb(&quot;all.pdbqt&quot;, multi=TRUE)
+write.pdb(res, &quot;results.pdb&quot;)</code></pre>
+<p>so then put in your reults with your og pdb file</p>
+<pre class="r"><code>ori &lt;- read.pdb(&quot;ligand.pdbqt&quot;)</code></pre>
+<p>get root mean square distance</p>
+<pre class="r"><code>rmsd(ori, res)</code></pre>
+<pre><code>##  [1]  0.649  4.206 11.110 10.529  4.840 10.932 10.993  3.655 10.996 11.222
+## [11] 10.567 10.372 11.019 11.338  8.390  9.063  8.254  8.978</code></pre>
+<p>How would you determine the RMSD for heavy atoms only (i.e. non hydrogen atoms)? HINT: The atom.select() function will be of help here along with the selection string “noh” for no hydrogens</p>
+<pre class="r"><code>inds &lt;-  atom.select(ori, &quot;noh&quot;)
+rmsd(ori$xyz[,inds$xyz], res$xyz[, inds$xyz])</code></pre>
+<pre><code>##  [1]  0.506  4.310 11.022 10.359  4.781 10.956 10.918  3.704 10.905 10.994
+## [11] 10.432 10.328 10.846 11.208  8.324  8.935  8.272  8.870</code></pre>
 </div>
 
 

@@ -120,6 +120,68 @@ write.pdb(ligand,"1hsg_ligand.pdb")
 
 cool that sends it over into your folder 
 
+couldn't get Auto dock tools to work on pc , went to a mac with it already downloaded adn opened it from there.
+
+Normally the strucutre has H atoms on it but visualizing in adt we dont really see them there, so we need to add them in 
+
+ok so now we have the pdbqt file that has the h atoms and positions and stuff about them. 
+
+ok we made a config.txt file that will basically lock in where the potential binding for the protein will be.
+
+#Section2 Docking ligands into HIV-1 protease
+
+
+
+
+Process docking result for viewing in VMD
+
+
+
+```r
+library(bio3d)
+res <- read.pdb("all.pdbqt", multi=TRUE)
+write.pdb(res, "results.pdb")
+```
+
+
+
+
+so then put in your reults with your og pdb file
+
+
+```r
+ori <- read.pdb("ligand.pdbqt")
+```
+get root mean square distance
+
+
+
+```r
+rmsd(ori, res)
+```
+
+```
+##  [1]  0.649  4.206 11.110 10.529  4.840 10.932 10.993  3.655 10.996 11.222
+## [11] 10.567 10.372 11.019 11.338  8.390  9.063  8.254  8.978
+```
+
+
+How would you determine the RMSD for heavy atoms only (i.e. non hydrogen atoms)?
+HINT: The atom.select() function will be of help here along with the selection string “noh” for no
+hydrogens
+
+
+
+
+```r
+inds <-  atom.select(ori, "noh")
+rmsd(ori$xyz[,inds$xyz], res$xyz[, inds$xyz])
+```
+
+```
+##  [1]  0.506  4.310 11.022 10.359  4.781 10.956 10.918  3.704 10.905 10.994
+## [11] 10.432 10.328 10.846 11.208  8.324  8.935  8.272  8.870
+```
 
 
 
