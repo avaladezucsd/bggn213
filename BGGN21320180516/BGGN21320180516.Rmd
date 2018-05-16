@@ -1,0 +1,99 @@
+---
+title: "Lecture13"
+author: "Andrew Valadez"
+date: "May 16, 2018"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Section 1
+
+
+Q1: What are those 4 candidate SNPs?
+[HINT, you will may want to check the first few links of search result]
+rs12936231, rs8067378, rs9303277, and rs7216389 
+
+Q2: What three genes do these variants overlap or effect?
+[HINT, you can find the information from the ENSEMBLE page as shown in the image
+below with red rectangles]
+ZPBP2, GSDMB, and ORMDL3
+
+
+https://uswest.ensembl.org/Homo_sapiens/Variation/Explore?r=17:39872367-39873367;v=rs12936231;vdb=variation;vf=7949754
+
+
+#1000 Genome Project data
+
+Read 1000 genome data for MXL dataset
+
+
+Q5: What proportion of the Mexican Ancestry in Los Angeles sample population (MXL)
+are homozygous for the asthma associated SNP (G|G)?
+[HINT: You can download a CVS file for this population from ENSEMBLE and use the R
+functions read.csv(), and table() to answer this question]
+14% 
+
+
+```{r}
+genotype <- read.csv("373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+genotype
+```
+
+
+```{r}
+  table(genotype$Genotype..forward.strand.)/nrow(genotype)
+```
+
+
+
+
+#Base quality scores from fastqsanger
+
+```{r}
+library(seqinr)
+library(gtools)
+phred <- asc( s2c("DDDDCDEDCDDDDBBDDDCC@"))
+phred
+```
+
+
+
+
+
+#Population scale analysis
+
+
+```{r}
+geno <- read.table("rs8067378_ENSG00000172057.6.txt")
+head(geno)
+summary(geno)
+```
+
+```{r}
+summary(geno$exp[geno$geno == "G/G"])
+summary(geno$exp[geno$geno == "A/G"])
+summary(geno$exp[geno$geno == "A/A"])
+
+```
+
+
+
+```{r}
+boxplot(exp ~ geno, data=geno, notch=TRUE)
+```
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+ggplot(geno, aes(geno, exp)) +geom_boxplot()
+```
+
+
+
