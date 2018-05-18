@@ -1,0 +1,348 @@
+---
+title: "Lecture14"
+author: "Andrew Valadez"
+date: "May 18, 2018"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Transcriptomics and the analysis of RNA-Seq data
+
+Input our count matrix and meta data matrix 
+
+```{r}
+counts <- read.csv("data/airway_scaledcounts.csv", stringsAsFactors = FALSE)
+metadata <-  read.csv("data/airway_metadata.csv", stringsAsFactors = FALSE)
+
+```
+
+```{r}
+head(counts)
+```
+```{r}
+head(metadata)
+```
+
+```{r}
+colnames(counts)[-1] == metadata$id
+
+```
+
+
+
+
+
+
+
+```{r}
+control <- metadata[metadata[,"dex"]=="control",]
+control.mean <- rowSums( counts[ ,control$id] )/(nrow(control))
+names(control.mean) <- counts$ensgene
+```
+
+```{r}
+head(control.mean)
+```
+
+
+```{r}
+treated <- metadata[metadata[,"dex"]=="treated",]
+treated.mean <- rowSums( counts[ ,treated$id] )/(nrow(treated))
+names(treated.mean) <- counts$ensgene
+```
+
+```{r}
+head(treated.mean)
+```
+
+
+
+Combine into a new data.frame
+```{r}
+meancounts <- data.frame(control.mean,treated.mean)
+head(meancounts)
+```
+
+
+
+```{r}
+colSums(meancounts)
+```
+Plot our mean counts dat for our control and our treated. 
+
+```{r}
+plot(meancounts)
+```
+
+
+
+```{r}
+plot(meancounts, log="xy")
+
+```
+
+
+```{r}
+meancounts$log2fc <- log2(meancounts[,"treated.mean"]/meancounts[,"control.mean"])
+head(meancounts)
+
+```
+Filter out genes with zeroes
+```{r}
+#gets the zero values position 
+zero.vals <- which(meancounts[,1:2]==0, arr.ind=TRUE)
+# now only want one zero value per row
+to.rm <- unique(zero.vals[,1])
+
+
+mycounts <- meancounts[-to.rm,]
+head(mycounts)
+```
+
+
+```{r}
+head(zero.vals)
+```
+
+log fold change of 2 is a common threshold . How many genes are in the up category and how many in the down categrory
+
+
+```{r}
+up.ind <- mycounts$log2fc > 2
+down.ind <- mycounts$log2fc < (-2)
+paste("Up:",sum(up.ind))
+paste("Down:",sum(down.ind))
+
+```
+
+
+```{r}
+anno <- read.csv("data/annotables_grch38.csv")
+head(anno)
+```
+Here we add annotation from a supplied CSV file such as those available at ensemble or ucsc
+
+```{r}
+results <- merge(mycounts,anno, by.x = "row.names", by.y = "ensgene")
+head(results)
+```
+
+```{r}
+#To install the packages
+#library("AnnotationDbi")
+#library("org.Hs.eg.db")
+```
+
+```{r}
+library("AnnotationDbi")
+```
+
+```{r}
+library("org.Hs.eg.db")
+```
+
+```{r}
+columns(org.Hs.eg.db)
+```
+
+
+```{r}
+mycounts$symbol <- mapIds(org.Hs.eg.db,
+                     keys=row.names(mycounts),
+                     column="SYMBOL",
+                     keytype="ENSEMBL",
+                     multiVals="first")
+head(mycounts)
+```
+
+
+```{r}
+#mycounts$uniprot <- mapIds(org.Hs.eg.db,
+ #                    keys=row.names(mycounts),
+  #                   column="UNIPROT",
+   #                  keytype="ENTREZ",
+    #                 multiVals="first")
+#head(mycounts)
+```
+
+
+
+
+
+
+
+#DESeq2 analysis
+
+
+```{r}
+library(DESeq2)
+citation("DESeq2")
+```
+
+```{r}
+dds <- DESeqDataSetFromMatrix(countData=counts, 
+                              colData=metadata, 
+                              design=~dex, 
+                              tidy=TRUE)
+dds
+
+```
+
+```{r}
+#results(dds)
+```
+
+```{r}
+dds <- DESeq(dds)
+```
+```{r}
+res <- results(dds)
+res
+```
+
+```{r}
+summary(res)
+```
+
+Order our results
+```{r}
+#sort(c(3,1,2))
+#order(c(3,1,2))
+resOrdered <- res[order(res$pvalue),]
+head(resOrdered)
+```
+
+```{r}
+res05 <- results(dds, alpha=0.05)
+summary(res05)
+```
+
+```{r}
+resSig05 <- subset(as.data.frame(res), padj < 0.05)
+nrow(resSig05)
+```
+How many are significant with an adjusted p-value < 0.05? 2182
+How about 0.01? Save this last set of results as resSig01.
+
+
+```{r}
+resSig01 <- subset(as.data.frame(res), padj < 0.01)
+nrow(resSig01)
+```
+Q10. Using either the previously generated anno object (annotations from the file annotables_grch38.csv file) or the mapIds() function (from the AnnotationDbi package) add annotation to your res01 results data.frame.
+```{r}
+
+resSig01 <- merge(resSig01, anno,  by.x = "row.names", by.y = "ensgene")
+head(resSig01)
+
+
+#results <- merge(mycounts,anno, by.x = "row.names", by.y = "ensgene")
+#head(results)
+```
+
+
+
+
+```{r}
+ord <- order( resSig01$padj )
+#View(res01[ord,])
+head(resSig01[ord,])
+```
+
+```{r}
+#write.csv(resSig01[ord,], "signif01_results.csv")
+
+```
+
+
+
+#Data Visualization
+
+
+```{r}
+i <- grep("CRISPLD2", resSig01$symbol)
+resSig01[i,]
+```
+
+```{r}
+rownames(resSig01[i,])
+
+```
+```{r}
+plotCounts(dds, gene="ENSG00000103196", intgroup="dex")
+
+```
+
+
+```{r}
+d <- plotCounts(dds, gene="ENSG00000103196", intgroup="dex", returnData=TRUE)
+head(d)
+```
+
+
+
+```{r}
+boxplot(count ~ dex , data=d)
+```
+
+
+
+```{r}
+library(ggplot2)
+ggplot(d, aes(dex, count)) + geom_boxplot(aes(fill=dex)) + scale_y_log10() + ggtitle("CRISPLD2")
+```
+
+
+
+
+```{r}
+res$sig <- res$padj<0.05
+```
+
+
+```{r}
+table(res$sig)
+```
+
+```{r}
+sum(is.na(res$sig))
+```
+
+```{r}
+plotMA(res, ylim=c(-2,2))
+```
+
+```{r}
+resLFC <- lfcShrink(dds, coef=2)
+resLFC
+```
+
+```{r}
+plotMA(resLFC, ylim=c(-2,2))
+```
+
+```{r}
+ggplot(as.data.frame(res), aes(log2FoldChange, -1*log10(pvalue), col=sig)) + 
+    geom_point() + 
+    ggtitle("Volcano plot")
+```
+
+```{r}
+vsdata <- vst(dds, blind=FALSE)
+```
+
+```{r}
+plotPCA(vsdata, intgroup="dex")
+
+```
+
+```{r}
+sessionInfo()
+
+```
+
