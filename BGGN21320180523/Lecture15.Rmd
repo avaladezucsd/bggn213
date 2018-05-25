@@ -1,0 +1,113 @@
+---
+title: "Lecture15"
+author: "Andrew Valadez"
+date: "May 24, 2018"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+source("https://bioconductor.org/biocLite.R")
+
+biocLite("gage")
+
+```
+
+
+
+```{r}
+library(DESeq2)
+```
+
+
+```{r}
+metaFile <- "data/GSE37704_metadata.csv"
+countFile <- "data/GSE37704_featurecounts.csv"
+
+
+```
+
+ Import metadata and take a peak
+
+
+```{r}
+colData= read.csv(metaFile,row.names = 1)
+head(colData)
+```
+ Import countdata
+
+```{r}
+countData = read.csv(countFile, row.names=1)
+head(countData)
+```
+
+
+```{r}
+# Note we need to remove the odd first $length col
+countData <- as.matrix(countData[,-1])
+head(countData)
+```
+
+
+This looks better but there are lots of zero entries in there so let’s get rid of them as we have no data for these.
+
+ Filter count data where you have 0 read count across all samples.
+
+
+
+```{r}
+countData = countData[rowSums(countData)>1, ]
+head(countData)
+```
+
+
+
+Nice now lets setup the DESeqDataSet object required for the DESeq() function and then run the DESeq pipeline. This is again similar to our last days hands-on session.
+
+```{r}
+dds = DESeqDataSetFromMatrix(countData=countData,
+                             colData=colData,
+                             design=~condition)
+dds = DESeq(dds)
+```
+Extracting our results table
+
+```{r}
+res <- results(dds)
+res
+```
+
+
+```{r}
+mcols(res, use.names = TRUE)
+
+```
+
+
+```{r}
+summary(res)
+```
+
+In the summary of our results printed above (and by default) the FDR level is set to 10% (i.e. adjusted p-value < 0.1) and the log2 fold change threshold is set to 0. Use the alpha and lfcThreshold input arguments to the results() function to change these to an FDR of 5% and a log2 fold change threshold of 2. Then use the summary() function to find out how many genes are up and down at these thresholds.
+
+
+
+```{r}
+res <- results(dds, lfcThreshold = 2, alpha = 0.05)
+mcols(res, use.names = TRUE)
+summary(res)
+
+```
+
+
+or do it like a table
+```{r}
+table( res$padj < 0.05, res$log2FoldChange > 2)
+```
+
+
