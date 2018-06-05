@@ -55,3 +55,54 @@ try2score <- seqidentity(try2$ali)
 heatmap(try2score)
 ```
 
+```{r}
+colnames(try2score) <- c("Rattus_norvegicus","Mus_Musculus", "Homo_sapiens", "Heterocephalus_glaber", "Nannospalax_galili", "Ictidomys_tridecemlineatus", "Octodon_degus")
+
+#colnames(try2score)
+
+rownames(try2score) <- c("Rattus_norvegicus","Mus_Musculus", "Homo_sapiens", "Heterocephalus_glaber", "Nannospalax_galili", "Ictidomys_tridecemlineatus", "Octodon_degus")
+```
+
+```{r}
+
+heatmap(try2score, margins = c(11,11), cexRow = 1, cexCol = 1)
+```
+
+```{r}
+par("mar")
+```
+
+
+
+```{r}
+consensusseq <- consensus(try2$ali)
+```
+
+```{r}
+blastedseq <- blast.pdb(consensusseq$seq)
+```
+
+
+```{r}
+hits <- plot.blast(blastedseq)
+```
+```{r}
+head(hits$pdb.id)
+```
+
+```{r}
+annotatedhits <- pdb.annotate(hits$pdb.id)
+```
+
+```{r}
+##doitforthecombining <- blastedseq$hit.tbl
+#combinedhits <- cbind(doitforthecombining,annotatedhits)
+```
+```{r}
+fastathing <- consensusseq$seq
+
+fastathingtest <- as.fasta(fastathing)
+
+aliplz <- fastathingtest$ali
+```
+
