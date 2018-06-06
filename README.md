@@ -21,4 +21,4 @@ Contents:
 -Class17:[Biological network analysis ](url)
 -Class18:[Cancer genomics ](url)
 
--Project:[Find a Gene Assignment](https://github.com/avaladezucsd/bggn213/blob/master/BGGN21320180605/GeneAssignment.Rmd)
+-Project:[Find a Gene Assignment](https://github.com/avaladezucsd/bggn213/blob/master/BGGN21320180605/GeneAssignment.html)
