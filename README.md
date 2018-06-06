@@ -2,7 +2,11 @@
 
 
 This is my classwork from BGGN213 at UC San Diego (Spring 2018). 
-The class homepage is [here](https://avaladezucsd.github.io/bggn213/)
+
+The class homepage is [here](https://github.com/avaladezucsd/bggn213)
+
+The course website is [here](https://bioboot.github.io/bggn213_S18/)
+
 Contents:
 
 -Class04:[Bioinformatics data analysis with R ](url)
