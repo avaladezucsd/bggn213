@@ -1,6 +1,6 @@
 # Bioinformatics BGGN213
 
-logo: http://www.bioinformatics.dtu.dk/gimage.ashx?i=VHJ1ZV9ffHxfX2h0dHA6Ly93d3cuYmlvaW5mb3JtYXRpY3MuZHR1LmRrLy8tL21lZGlhL0luc3RpdHV0dGVyL2Jpb2luZm9ybWF0aWNzL0ZvcnNpZGUvTmV3Q2hpcC5hc2h4X198fF9fNzAwX198fF9fMzUwX198fF9fVHJ1ZV9ffHxfX0ZhbHNlX198fF9fRmFsc2VfX3x8X18wX198fF9fX198fF9fMA_:_3d_:_3d
+[logo]: http://www.bioinformatics.dtu.dk/gimage.ashx?i=VHJ1ZV9ffHxfX2h0dHA6Ly93d3cuYmlvaW5mb3JtYXRpY3MuZHR1LmRrLy8tL21lZGlhL0luc3RpdHV0dGVyL2Jpb2luZm9ybWF0aWNzL0ZvcnNpZGUvTmV3Q2hpcC5hc2h4X198fF9fNzAwX198fF9fMzUwX198fF9fVHJ1ZV9ffHxfX0ZhbHNlX198fF9fRmFsc2VfX3x8X18wX198fF9fX198fF9fMA_:_3d_:_3d
 
 This is my classwork from BGGN213 at UC San Diego (Spring 2018). 
 
